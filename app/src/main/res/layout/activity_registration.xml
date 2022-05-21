@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_001"
+    tools:context=".RegistrationActivity">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_design"
+        android:backgroundTint="@color/green_001"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="45px"
+            android:gravity="center"
+            android:text="@string/sign_up_title"
+            android:textColor="@color/green_002"
+            android:textSize="12pt" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.034">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="75px">
+            <com.google.android.material.textfield.TextInputLayout
+                app:errorEnabled="true"
+                android:id="@+id/twName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/green_002"
+                app:boxCornerRadiusBottomEnd="20px"
+                app:boxCornerRadiusBottomStart="20px"
+                app:boxCornerRadiusTopEnd="20px"
+                app:boxCornerRadiusTopStart="20px"
+                app:placeholderText="@string/hint_name"
+                app:placeholderTextAppearance="@color/green_002"
+                app:placeholderTextColor="@color/green_001"
+                android:hint="@string/full_name"
+                app:hintTextColor="@color/green_002"
+                app:helperTextEnabled="true"
+                app:helperText="@string/helper_name"
+                app:startIconDrawable="@drawable/ic_baseline_account_circle_24"
+                app:startIconTint="@color/green_002">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInputFullNameSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green_002"
+                    android:textSize="8pt"
+                    tools:layout_editor_absoluteX="1dp"
+                    tools:layout_editor_absoluteY="362dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30px"
+            android:orientation="vertical"
+            android:paddingHorizontal="75px">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/twPhone"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/green_002"
+                app:boxCornerRadiusBottomEnd="20px"
+                app:boxCornerRadiusBottomStart="20px"
+                app:boxCornerRadiusTopEnd="20px"
+                app:boxCornerRadiusTopStart="20px"
+                app:placeholderText="@string/hint_phone"
+                app:placeholderTextAppearance="@color/green_002"
+                app:placeholderTextColor="@color/green_001"
+                android:hint="@string/phone_number"
+                app:hintTextColor="@color/green_002"
+                app:helperTextEnabled="true"
+                app:helperText="@string/helper_phone"
+                app:startIconDrawable="@drawable/ic_baseline_phone_24"
+                app:startIconTint="@color/green_002">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInputPhoneSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green_002"
+                    android:textSize="8pt"
+                    tools:layout_editor_absoluteX="1dp"
+                    tools:layout_editor_absoluteY="362dp"
+                    android:inputType="phone"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30px"
+            android:paddingHorizontal="75px">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/twDate"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/green_002"
+                app:boxCornerRadiusBottomEnd="20px"
+                app:boxCornerRadiusBottomStart="20px"
+                app:boxCornerRadiusTopEnd="20px"
+                app:boxCornerRadiusTopStart="20px"
+                app:placeholderText="@string/hint_date"
+                app:placeholderTextAppearance="@color/green_002"
+                app:placeholderTextColor="@color/green_001"
+                android:hint="@string/date_of_birth"
+                app:hintTextColor="@color/green_002"
+                app:helperTextEnabled="true"
+                app:helperText="@string/helper_date"
+                app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
+                app:startIconTint="@color/green_002">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInputDateOfBirthSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green_002"
+                    android:textSize="8pt"
+                    tools:layout_editor_absoluteX="1dp"
+                    tools:layout_editor_absoluteY="362dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30px"
+            android:paddingHorizontal="75px">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/twEmailSignUp"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/green_002"
+                app:boxCornerRadiusBottomEnd="20px"
+                app:boxCornerRadiusBottomStart="20px"
+                app:boxCornerRadiusTopEnd="20px"
+                app:boxCornerRadiusTopStart="20px"
+                app:placeholderText="@string/hint_email"
+                app:placeholderTextAppearance="@color/green_002"
+                app:placeholderTextColor="@color/green_001"
+                android:hint="@string/email"
+                app:hintTextColor="@color/green_002"
+                app:helperTextEnabled="true"
+                app:helperText="@string/helper_email"
+                app:startIconDrawable="@drawable/ic_baseline_email_24"
+                app:startIconTint="@color/green_002">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInputEmailSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green_002"
+                    android:textSize="8pt"
+                    tools:layout_editor_absoluteX="1dp"
+                    tools:layout_editor_absoluteY="362dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30px"
+            android:paddingHorizontal="75px">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/twPasswordSignUp"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusBottomEnd="20px"
+                app:boxCornerRadiusBottomStart="20px"
+                app:boxCornerRadiusTopEnd="20px"
+                app:boxCornerRadiusTopStart="20px"
+                app:boxStrokeColor="@color/green_002"
+                app:placeholderText="@string/hint_password"
+                app:placeholderTextColor="@color/green_001"
+                android:hint="@string/password"
+                app:hintTextColor="@color/green_002"
+                app:helperTextEnabled="true"
+                app:helperText="@string/helper_password"
+                app:startIconDrawable="@drawable/ic_baseline_password_24"
+                app:startIconTint="@color/green_002"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/green_002"
+                app:errorIconDrawable="@null">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInputPasswordSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green_002"
+                    tools:layout_editor_absoluteX="1dp"
+                    android:textSize="8pt"
+                    android:inputType="textPassword"
+                    tools:layout_editor_absoluteY="362dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50px"
+        android:background="@drawable/bg_btn"
+        android:text="@string/btn_sign_up"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutSignUp"
+        app:layout_constraintVertical_bias="0.105" />
+
+    <Button
+        android:id="@+id/btnBackToSignIn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="62dp"
+        android:drawableLeft="@drawable/ic_baseline_arrow_left_24"
+        android:text="@string/btn_login"
+        android:textColor="@color/green_002"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignUp"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
