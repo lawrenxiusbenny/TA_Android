@@ -45,7 +45,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
     //MATERIAL DESIGN
-    implementation "com.google.android.material:material:1.1.0"
+    implementation "com.google.android.material:material:1.2.0"
 
     //Glide for Image
     implementation 'com.github.bumptech.glide:glide:4.4.0'
@@ -64,4 +64,13 @@ dependencies {
 
     //bottom navigation
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
+
+    //scroll view
+    implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
+
+    //shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    //fancy toast
+    implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.8'
 }

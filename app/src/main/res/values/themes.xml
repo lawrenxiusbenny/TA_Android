@@ -17,4 +17,9 @@
 
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="ImageView.Corner" parent="">
+        <item name="cornerSizeBottomLeft">30dp</item>
+        <item name="cornerSizeBottomRight">30dp</item>
+    </style>
 </resources>

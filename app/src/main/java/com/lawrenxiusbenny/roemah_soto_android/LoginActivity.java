@@ -2,7 +2,10 @@ package com.lawrenxiusbenny.roemah_soto_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,8 +14,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.lawrenxiusbenny.roemah_soto_android.api.MenuApi;
+import com.lawrenxiusbenny.roemah_soto_android.model.Menu;
+import com.shashank.sony.fancytoastlib.FancyToast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.android.volley.Request.Method.POST;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +43,11 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout twEmail,twPassword;
 
     private String getEmail, getPassword;
+
+    private int id_customer;
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sPreferences;
+    public static final String KEY_ID = "id_customer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,25 +128,93 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void cekDataSignIn(){
+        boolean cekEmail,cekPassword;
+
+        cekEmail = false;
+        cekPassword = false;
 
         getEmail = txtInputEmail.getText().toString();
         getPassword = txtInputPass.getText().toString();
 
         if(getEmail.isEmpty()){
-//            txtInputEmail.setError("Email should not be empty");
             twEmail.setError("Email should not be empty");
         }else if(!Patterns.EMAIL_ADDRESS.matcher(getEmail).matches()){
-//            txtInputEmail.setError("Invalid Email");
             twEmail.setError("Invalid Email");
+        }else{
+            cekEmail = true;
         }
 
         if(getPassword.isEmpty()){
-//            txtInputPass.setError("Password should not be empty");
             twPassword.setError("Password should not be empty");
         }else if(getPassword.length()<6){
-//            txtInputPass.setError("Password should be at least 6 characters");
             twPassword.setError("Password should be at least 6 characters");
+        }else{
+            cekPassword = true;
         }
 
+        if(cekEmail && cekPassword){
+            login(txtInputEmail.getText().toString(),txtInputPass.getText().toString());
+        }
+    }
+
+    public void login(final String email, final String password){
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        ProgressDialog progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
+
+        StringRequest stringRequest = new StringRequest(POST, MenuApi.ROOT_LOGIN, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    progress.dismiss();
+                    JSONObject obj = new JSONObject(response);
+                    String status;
+                    status = obj.getString("OUT_STAT");
+
+                    id_customer = obj.getJSONObject("OUT_DATA").getInt("id_customer");
+                    if(status.equalsIgnoreCase("T")){
+                        FancyToast.makeText(LoginActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        getDataToPreference(id_customer);
+                        Intent i = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    }else{
+                        FancyToast.makeText(LoginActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    }
+                } catch (JSONException e) {
+                    progress.dismiss();
+                    e.printStackTrace();
+                    FancyToast.makeText(LoginActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                FancyToast.makeText(LoginActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("email_customer", String.valueOf(email));
+                params.put("password_customer", String.valueOf(password));
+
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public void getDataToPreference(int id){
+        sPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE);
+        editor = sPreferences.edit();
+        editor.putInt(KEY_ID,id);
+        editor.commit();
     }
 }
