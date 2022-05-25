@@ -1,5 +1,6 @@
 package com.lawrenxiusbenny.roemah_soto_android.adapter;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -30,8 +31,13 @@ import com.facebook.shimmer.ShimmerDrawable;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
+import com.lawrenxiusbenny.roemah_soto_android.LoginActivity;
+import com.lawrenxiusbenny.roemah_soto_android.MainActivity;
 import com.lawrenxiusbenny.roemah_soto_android.R;
+import com.lawrenxiusbenny.roemah_soto_android.api.PesananApi;
+import com.lawrenxiusbenny.roemah_soto_android.dialog.LoadingDialog;
 import com.lawrenxiusbenny.roemah_soto_android.model.Menu;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,20 +55,25 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     private List<Menu> menuList;
     private List<Menu> menuListFiltered;
     private Context context;
-    private Context mainContext;
-    private View view;
+    private Activity activity;
+
+
+
     MeowBottomNavigation bottomNavigation;
 
-//    private SharedPreferences sPreferences;
-//    public static final String KEY_ID = "id_reservasi";
-//    int id_reservasi;
+    private SharedPreferences sPreferences;
+    public static final String KEY_ID = "id_customer";
+    int id_customer;
 
-    public MenuRecyclerViewAdapter(Context context, List<Menu> productList) {
+    private LoadingDialog loadingDialog;
 
+    public MenuRecyclerViewAdapter(Activity act, Context context, List<Menu> productList) {
+
+        this.activity = act;
         this.context = context;
         this.menuList = productList;
         this.menuListFiltered = productList;
-
+        this.loadingDialog = new LoadingDialog(this.activity);
     }
 
     @NonNull
@@ -80,7 +91,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull MenuRecyclerViewAdapter.MenuViewHolder holder, int position) {
         final Menu menu = menuListFiltered.get(position);
-//
+
         Shimmer shimmer = new Shimmer.ColorHighlightBuilder()
                 .setBaseColor(Color.parseColor("#F3F3F3"))
                 .setBaseAlpha(1)
@@ -95,108 +106,6 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         NumberFormat formatter = new DecimalFormat("#,###");
         holder.txtNama.setText(menu.getNama_menu());
         holder.txtdeskripsi.setText(menu.getDeskripsi_menu());
-        if(menu.getId_status_menu() == 0) {
-            holder.txtNot.setVisibility(View.VISIBLE);
-        }
-//            holder.btnOrder.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Dialog dialog;
-//                    dialog = new Dialog(context);
-//                    dialog.setContentView(R.layout.dialog_kosong);
-//                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                    dialog.show();
-//                    MaterialButton btnClose = dialog.findViewById(R.id.closeBtnKosong);
-//                    btnClose.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            dialog.dismiss();
-//                        }
-//                    });
-//                }
-//            });
-//        }else{
-//            holder.btnOrder.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    sPreferences = context.getSharedPreferences("scan", Context.MODE_PRIVATE);
-//                    id_reservasi = sPreferences.getInt(KEY_ID,Context.MODE_PRIVATE);
-//                    if(id_reservasi==0){
-//                        Dialog dialog;
-//                        dialog = new Dialog(context);
-//                        dialog.setContentView(R.layout.dialog_scanning);
-//                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                        dialog.show();
-//                        Button btnClose = dialog.findViewById(R.id.btnCloseScanning);
-//                        btnClose.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                    }else{
-//                        Dialog dialog;
-//                        dialog = new Dialog(context);
-//                        dialog.setContentView(R.layout.dialog_tambah_edit);
-//                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                        dialog.show();
-//                        MaterialButton btnCancel = dialog.findViewById(R.id.btnCancel);
-//                        MaterialButton btnAdd = dialog.findViewById(R.id.btnAddEdit);
-//                        TextInputEditText txtInput = dialog.findViewById(R.id.txtInputEdtTambah);
-//                        ImageView imgAdd = dialog.findViewById(R.id.ivTambahEdit);
-//                        TextView txtAvailable = dialog.findViewById(R.id.jumlahTersediaAdd);
-//                        TextView txtNamaAdd = dialog.findViewById(R.id.namaMenuAdd);
-//                        TextView txtHargaAdd = dialog.findViewById(R.id.HargaMenuAdd);
-//
-//                        double stok = menu.getStok_bahan();
-//                        double serving = menu.getServing_size();
-//
-//                        double available = Math.floor(stok/serving);
-//                        txtNamaAdd.setText(menu.getNama_menu());
-//                        if(menu.getHarga_menu()==0){
-//                            txtHargaAdd.setText("Free");
-//                        }else{
-//                            txtHargaAdd.setText("IDR "+ formatter.format(menu.getHarga_menu()));
-//                        }
-//                        Glide.with(context)
-//                                .load("http://be.atmabbq.xyz/menus/"+menu.getGambar_menu())
-//                                .placeholder(shimmerDrawable)
-//                                .into(imgAdd);
-//                        txtAvailable.setText(String.valueOf(available));
-//
-//                        btnCancel.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//
-//                        btnAdd.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                if(txtInput.getText().toString().length() == 0){
-//                                    txtInput.setError("cannot be null");
-//                                }else{
-//                                    int input = Integer.parseInt(txtInput.getText().toString());
-//                                    if(input < 1){
-//                                        txtInput.setError("should be at least 1");
-//                                    } else if(input>available) {
-//                                        txtInput.setError("should be less than available number");
-//                                    }else{
-//                                        addPesanan(menu.getId_menu(),id_reservasi,Integer.parseInt(txtInput.getText().toString()));
-//                                        dialog.dismiss();
-//                                        Intent i = new Intent(context,MainActivity.class);
-//                                        context.startActivity(i);
-//                                    }
-//                                }
-//                            }
-//                        });
-//                    }
-//                }
-//            });
-//        }
-
 
         if(menu.getHarga_menu() == 0){
             holder.txtHarga.setText("Free");
@@ -209,14 +118,96 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
                 .placeholder(shimmerDrawable)
                 .into(holder.ivGambar);
 
+        if(menu.getId_status_menu() == 0) {
+            holder.txtNot.setVisibility(View.VISIBLE);
 
-//
-//        holder.mParent.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+            holder.btnOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Dialog dialog;
+                    dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.dialog_kosong);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                    MaterialButton btnClose = dialog.findViewById(R.id.closeBtnKosong);
+                    btnClose.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            });
+        }else{
+            holder.btnOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    sPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+                    id_customer = sPreferences.getInt(KEY_ID,Context.MODE_PRIVATE);
+                    if(id_customer==0){
+                        Dialog dialog;
+                        dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_not_login);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+//                        Button btnClose = dialog.findViewById(R.id.btnCloseNotLogin);
+//                        btnClose.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+                    }else{
+                        Dialog dialog;
+                        dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_tambah_edit);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                        MaterialButton btnCancel = dialog.findViewById(R.id.btnCancel);
+                        MaterialButton btnAdd = dialog.findViewById(R.id.btnAddEdit);
+
+                        TextInputEditText txtInputJumlah = dialog.findViewById(R.id.txtInputJumlahEdtTambah);
+                        TextInputEditText txtInputNote = dialog.findViewById(R.id.txtInputNoteEdtTambah);
+
+                        ImageView imgAdd = dialog.findViewById(R.id.ivTambahEdit);
+                        TextView txtNamaAdd = dialog.findViewById(R.id.namaMenuAdd);
+                        TextView txtHargaAdd = dialog.findViewById(R.id.HargaMenuAdd);
+
+                        txtNamaAdd.setText(menu.getNama_menu());
+                        if(menu.getHarga_menu()==0){
+                            txtHargaAdd.setText("Free");
+                        }else{
+                            txtHargaAdd.setText("IDR "+ formatter.format(menu.getHarga_menu()));
+                        }
+
+                        Glide.with(context)
+                                .load("https://api.roemahsoto.xyz/Gambar_menu/"+menu.getGambar_menu())
+                                .placeholder(shimmerDrawable)
+                                .into(imgAdd);
+
+                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        btnAdd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if(txtInputJumlah.getText().toString().length() < 1){
+                                    txtInputJumlah.setError("should be at least 1");
+                                }else{
+                                    addPesanan(menu.getId_menu(),id_customer,Integer.parseInt(txtInputJumlah.getText().toString()),txtInputNote.getText().toString());
+                                    dialog.dismiss();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -275,38 +266,43 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         };
     }
 
-//    public void addPesanan(final int id_menu, final int id_reservasi, final int jumlah){
-//        RequestQueue queue = Volley.newRequestQueue(context);
-//
-//        StringRequest stringRequest = new StringRequest(POST, PesananApi.ROOT_INSERT, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    JSONObject obj = new JSONObject(response);
-//                    FancyToast.makeText(context, obj.getString("message"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    FancyToast.makeText(context, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                FancyToast.makeText(context, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-//                error.printStackTrace();
-//            }
-//        }){
-//            @Override
-//            protected Map<String, String> getParams()
-//            {
-//                Map<String, String>  params = new HashMap<String, String>();
-//                params.put("id_menu", String.valueOf(id_menu));
-//                params.put("id_reservasi", String.valueOf(id_reservasi));
-//                params.put("jumlah", String.valueOf(jumlah));
-//
-//                return params;
-//            }
-//        };
-//        queue.add(stringRequest);
-//    }
+    public void addPesanan(final int id_menu, final int id_customer, final int jumlah_pesanan, final String catatan){
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        loadingDialog.startLoadingDialog();
+        StringRequest stringRequest = new StringRequest(POST, PesananApi.ROOT_ADD, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    loadingDialog.dismissDialog();
+                    JSONObject obj = new JSONObject(response);
+                    FancyToast.makeText(context, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                } catch (JSONException e) {
+                    loadingDialog.dismissDialog();
+                    e.printStackTrace();
+                    FancyToast.makeText(context, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
+                FancyToast.makeText(context, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("id_menu", String.valueOf(id_menu));
+                params.put("id_customer", String.valueOf(id_customer));
+                params.put("jumlah_pesanan", String.valueOf(jumlah_pesanan));
+                params.put("catatan", catatan);
+
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
 }

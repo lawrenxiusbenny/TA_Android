@@ -9,12 +9,16 @@
     <string name="full_name">Full Name</string>
     <string name="phone_number">Phone Number</string>
     <string name="date_of_birth">Date Of Birth</string>
+    <string name="royalty">Royalty Point</string>
 
+    <string name="claim_coupon">claim coupon</string>
 
     <string name="login_to_registration">Do not have an account?</string>
 
     <!--    title     -->
     <string name="sign_up_title">Sign Up</string>
+    <string name="cart_title">Order Summary</string>
+    <string name="profile_title">Profile</string>
 
 
     <!--button-->
@@ -22,13 +26,31 @@
     <string name="btn_sign_up">Sign Up</string>
     <string name="sign_up">Sign up!</string>
     <string name="home">Home</string>
+    <string name="checkout">CHECKOUT</string>
+    <string name="close">Close</string>
+    <string name="add">Add</string>
+    <string name="logout">Logout</string>
+    <string name="go_to_login">Go to login</string>
+
+    <!--  order title  -->
+    <string name="add_order">ADD ORDER</string>
+    <string name="order">ORDER</string>
+    <string name="number_order">Number of order</string>
+    <string name="note">Note</string>
 
     <!--    hint    -->
     <string name="hint_email">example@gmail.com</string>
     <string name="hint_password">your account password</string>
     <string name="hint_name">your full name</string>
     <string name="hint_phone">your phone number</string>
-    <string name="hint_date">date of birth</string>
+    <string name="hint_date">YYYY-MM-DD</string>
+    <string name="hint_input_jumlah">input a number</string>
+    <string name="hint_input_note">input if necesssary</string>
+
+    <!-- search hint -->
+    <string name="hint_search_menu">Search your craving here...</string>
+    <string name="hint_search_order">Search your order here...</string>
+
 
     <!--    Helper text -->
     <string name="helper_name">*required</string>
@@ -41,6 +63,27 @@
     <!--    Menu Page-->
     <string name="title_recommend">Recommended for you</string>
     <string name="title_menu_list">Menu List</string>
+
+    <!--    Cart Page    -->
+    <string name="total">Total Payment</string>
+    <string name="value">IDR 500.000,00</string>
+    <string name="cart_kosong">Your Cart is Empty</string>
+    <string name="cart_kosong2">Looks like you have not added anything to your cart yet</string>
+
+    <string name="cart_notlogin">You are not login yet</string>
+    <string name="cart_notlogin2">please login first to access this page</string>
+
+    <!--  dialog kosong  -->
+    <string name="kosong_title">We are sorry</string>
+    <string name="kosong_body">the menu is not available for a while</string>
+
+    <!--  dialog delete  -->
+    <string name="delete_title">Confirmation Delete</string>
+    <string name="delete_body">Do you want to delete selected order?</string>
+
+    <!--  dialog Logout  -->
+    <string name="logout_title">Confirmation Logout</string>
+    <string name="logout_body">Are you sure want to logout from this application?</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

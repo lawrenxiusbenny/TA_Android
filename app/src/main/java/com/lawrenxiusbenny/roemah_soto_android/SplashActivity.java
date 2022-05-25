@@ -37,11 +37,11 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent i;
-//                if(id_customer != 0){
-//                    i = new Intent(SplashActivity.this,MainActivity.class);
-//                }else{
+                if(id_customer != 0){
+                    i = new Intent(SplashActivity.this,MainActivity.class);
+                }else{
                     i = new Intent(SplashActivity.this,LoginActivity.class);
-//                }
+                }
 
                 startActivity(i);
                 finish();

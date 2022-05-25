@@ -6,6 +6,4 @@ public class MenuApi {
 
     public static final String ROOT_SELECT_ALL	    =  ROOT_API+"menu-mobile";
     public static final String ROOT_SELECT_ALL_RECOMMEND	    =  ROOT_API + "menu-mobile-recommend";
-    public static final String ROOT_LOGIN	    =  ROOT_API + "login-customer";
-    public static final String ROOT_REGISTRATION	    =  ROOT_API + "registration";
 }

@@ -23,7 +23,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.lawrenxiusbenny.roemah_soto_android.adapter.MenuRecyclerViewAdapter;
-import com.lawrenxiusbenny.roemah_soto_android.adapter.RecommendMenuRecyclerViewAdapter;
 import com.lawrenxiusbenny.roemah_soto_android.api.MenuApi;
 import com.lawrenxiusbenny.roemah_soto_android.model.Menu;
 
@@ -39,8 +38,7 @@ import static com.android.volley.Request.Method.GET;
 public class MenuFragment extends Fragment {
 
     private RecyclerView recyclerView, recyclerViewRecommend;
-    private MenuRecyclerViewAdapter adapterMenu;
-    private RecommendMenuRecyclerViewAdapter adapterMenuRecommend;
+    private MenuRecyclerViewAdapter adapterMenu,adapterMenuRecommend;
     private List<Menu> listMenu, listMenuRecommend;
     private ConstraintLayout layout;
 
@@ -89,7 +87,7 @@ public class MenuFragment extends Fragment {
     public void setAdapter(){
         listMenu = new ArrayList<Menu>();
         recyclerView = view.findViewById(R.id.recycler_view_menu);
-        adapterMenu = new MenuRecyclerViewAdapter(view.getContext(), listMenu);
+        adapterMenu = new MenuRecyclerViewAdapter(this.getActivity(),view.getContext(), listMenu);
         int gridData = 2;
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(view.getContext(),gridData);
         recyclerView.setLayoutManager(layoutManager);
@@ -100,8 +98,7 @@ public class MenuFragment extends Fragment {
     public void setAdapterRecommend(){
         listMenuRecommend = new ArrayList<Menu>();
         recyclerViewRecommend = view.findViewById(R.id.recycler_view_recommend);
-        adapterMenuRecommend = new RecommendMenuRecyclerViewAdapter(view.getContext(), listMenuRecommend);
-
+        adapterMenuRecommend = new MenuRecyclerViewAdapter(this.getActivity(),view.getContext(), listMenuRecommend);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
         recyclerViewRecommend.setLayoutManager(layoutManager);
         recyclerViewRecommend.setItemAnimator(new DefaultItemAnimator());

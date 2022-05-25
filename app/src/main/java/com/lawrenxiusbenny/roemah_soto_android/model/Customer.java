@@ -8,11 +8,12 @@ public class Customer {
     public String telepon_customer;
     public String password_customer;
     public String tanggal_lahir_customer;
+    public int jumlah_point;
 
     public Customer() {
     }
 
-    public Customer(int id_customer, String id_royalty_point, String nama_customer, String email_customer, String telepon_customer, String password_customer, String tanggal_lahir_customer) {
+    public Customer(int id_customer, String id_royalty_point, String nama_customer, String email_customer, String telepon_customer, String password_customer, String tanggal_lahir_customer, int jumlah_point) {
         this.id_customer = id_customer;
         this.id_royalty_point = id_royalty_point;
         this.nama_customer = nama_customer;
@@ -20,6 +21,15 @@ public class Customer {
         this.telepon_customer = telepon_customer;
         this.password_customer = password_customer;
         this.tanggal_lahir_customer = tanggal_lahir_customer;
+        this.jumlah_point = jumlah_point;
+    }
+
+    public int getJumlah_point() {
+        return jumlah_point;
+    }
+
+    public void setJumlah_point(int jumlah_point) {
+        this.jumlah_point = jumlah_point;
     }
 
     public int getId_customer() {

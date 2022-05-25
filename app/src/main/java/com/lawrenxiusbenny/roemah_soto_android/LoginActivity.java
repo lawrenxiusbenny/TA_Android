@@ -1,6 +1,7 @@
 package com.lawrenxiusbenny.roemah_soto_android;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,9 +12,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.agrawalsuneet.dotsloader.loaders.LazyLoader;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,7 +24,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.lawrenxiusbenny.roemah_soto_android.api.CustomerApi;
 import com.lawrenxiusbenny.roemah_soto_android.api.MenuApi;
+import com.lawrenxiusbenny.roemah_soto_android.dialog.LoadingDialog;
 import com.lawrenxiusbenny.roemah_soto_android.model.Menu;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
@@ -49,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sPreferences;
     public static final String KEY_ID = "id_customer";
 
+    final LoadingDialog loadingDialog = new LoadingDialog(LoginActivity.this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +63,9 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin = findViewById(R.id.btnLogin);
         btnHome = findViewById(R.id.btnHome);
+
+
+
 
         //Text Input
         txtInputEmail = findViewById(R.id.txtInputEmail);
@@ -160,23 +170,18 @@ public class LoginActivity extends AppCompatActivity {
     public void login(final String email, final String password){
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        ProgressDialog progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("Wait while loading...");
-        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-        progress.show();
+        loadingDialog.startLoadingDialog();
 
-        StringRequest stringRequest = new StringRequest(POST, MenuApi.ROOT_LOGIN, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(POST, CustomerApi.ROOT_LOGIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    progress.dismiss();
+                    loadingDialog.dismissDialog();
                     JSONObject obj = new JSONObject(response);
                     String status;
                     status = obj.getString("OUT_STAT");
-
-                    id_customer = obj.getJSONObject("OUT_DATA").getInt("id_customer");
                     if(status.equalsIgnoreCase("T")){
+                        id_customer = obj.getJSONObject("OUT_DATA").getInt("id_customer");
                         FancyToast.makeText(LoginActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                         getDataToPreference(id_customer);
                         Intent i = new Intent(LoginActivity.this,MainActivity.class);
@@ -186,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                         FancyToast.makeText(LoginActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                     }
                 } catch (JSONException e) {
-                    progress.dismiss();
+                    loadingDialog.dismissDialog();
                     e.printStackTrace();
                     FancyToast.makeText(LoginActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
@@ -196,6 +201,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 FancyToast.makeText(LoginActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 error.printStackTrace();
+                loadingDialog.dismissDialog();
             }
         }){
             @Override

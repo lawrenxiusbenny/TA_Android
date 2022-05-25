@@ -12,6 +12,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="shimmer">#dddddd</color>
+    <color name="input_order">#e8f5cb</color>
+
 
     <color name="grey">#DDDDDD</color>
 </resources>

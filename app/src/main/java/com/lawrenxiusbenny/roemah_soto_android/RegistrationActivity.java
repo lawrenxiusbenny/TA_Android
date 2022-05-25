@@ -22,12 +22,15 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.lawrenxiusbenny.roemah_soto_android.api.CustomerApi;
 import com.lawrenxiusbenny.roemah_soto_android.api.MenuApi;
+import com.lawrenxiusbenny.roemah_soto_android.dialog.LoadingDialog;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -48,6 +51,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private String getName, getPhone, getDate, getEmail, getPassword;
 
+    final LoadingDialog loadingDialog = new LoadingDialog(RegistrationActivity.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +85,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         RegistrationActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth,onDateSetListener,year,month,day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
                 datePickerDialog.show();
             }
         });
@@ -89,7 +94,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month+1;
-                String date = dayOfMonth+"/"+month+"/"+year;
+                String date = year +"-"+month+"-"+dayOfMonth;
                 txtInputDate.setText(date);
             }
         };
@@ -225,7 +230,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         if(getDate.isEmpty()){
             twDate.setError("Birth of Date should not be empty");
-        }else{
+        }else {
             cekDate = true;
         }
 
@@ -253,17 +258,13 @@ public class RegistrationActivity extends AppCompatActivity {
     public void signUp(final String name, final String phone, final String date, final String email, final String pass){
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        ProgressDialog progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("Wait while loading...");
-        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-        progress.show();
+        loadingDialog.startLoadingDialog();
 
-        StringRequest stringRequest = new StringRequest(POST, MenuApi.ROOT_REGISTRATION, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(POST, CustomerApi.ROOT_REGISTRATION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    progress.dismiss();
+                    loadingDialog.dismissDialog();
                     JSONObject obj = new JSONObject(response);
                     String status;
                     status = obj.getString("OUT_STAT");
@@ -277,15 +278,16 @@ public class RegistrationActivity extends AppCompatActivity {
                         FancyToast.makeText(RegistrationActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                     }
                 } catch (JSONException e) {
-                    progress.dismiss();
+                    loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(RegistrationActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(RegistrationActivity.this, "Network unstable, please try again1",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                FancyToast.makeText(RegistrationActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                loadingDialog.dismissDialog();
+                FancyToast.makeText(RegistrationActivity.this, "Email has been used, please try another",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 error.printStackTrace();
             }
         }){
