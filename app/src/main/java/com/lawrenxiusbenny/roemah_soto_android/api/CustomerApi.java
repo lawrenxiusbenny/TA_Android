@@ -8,4 +8,6 @@ public class CustomerApi {
     public static final String ROOT_REGISTRATION	    =  ROOT_API + "registration";
     public static final String ROOT_GET_CUSTOMER_BY_ID	    =  ROOT_API + "customer-mobile/";
     public static final String ROOT_UPDATE_NAME	    =  ROOT_API + "customer-name/";
+    public static final String ROOT_UPDATE_DATE	    =  ROOT_API + "customer-date/";
+    public static final String ROOT_UPDATE_PHONE	    =  ROOT_API + "customer-phone/";
 }

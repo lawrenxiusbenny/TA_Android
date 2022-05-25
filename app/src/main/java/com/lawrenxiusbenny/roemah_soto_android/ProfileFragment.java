@@ -9,8 +9,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Handler;
 import android.text.Editable;
@@ -222,6 +224,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         cekEditDate(dialog, twEditDate, txtEditDate);
+
                     }
                 });
 
@@ -335,6 +338,14 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    public void loadFragment(Fragment fragment) {
+        FragmentManager manager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
+        manager.beginTransaction()
+                .replace(R.id.fragment_profile, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void loadProfile(){
         shimmerFrameLayout.startShimmer();
         if(id_customer == 0){
@@ -358,6 +369,8 @@ public class ProfileFragment extends Fragment {
             twEdit.setError("Full name should not be empty");
         }else{
             saveName(dialog,txtEdit.getText().toString());
+            Fragment fragment = new ProfileFragment();
+            loadFragment(fragment);
         }
     }
 
@@ -367,7 +380,9 @@ public class ProfileFragment extends Fragment {
         if(getPhone.length()<11 || getPhone.length()>13){
             twEdit.setError("Phone number should be between 11-13 characters");
         }else{
-
+            savePhone(dialog,txtEdit.getText().toString());
+            Fragment fragment = new ProfileFragment();
+            loadFragment(fragment);
         }
     }
 
@@ -377,7 +392,9 @@ public class ProfileFragment extends Fragment {
         if(getDate.isEmpty()){
             twEdit.setError("Birth of Date should not be empty");
         }else{
-
+            saveDate(dialog,txtEdit.getText().toString());
+            Fragment fragment = new ProfileFragment();
+            loadFragment(fragment);
         }
     }
 
@@ -461,6 +478,78 @@ public class ProfileFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("nama_customer", String.valueOf(name));
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public void saveDate(Dialog dialog, String date){
+        //Pendeklarasian queue
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+        dialog.dismiss();
+        loadingDialog.startLoadingDialog();
+        StringRequest stringRequest = new StringRequest(PUT, CustomerApi.ROOT_UPDATE_DATE + id_customer, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    loadingDialog.dismissDialog();
+                    JSONObject obj = new JSONObject(response);
+                    FancyToast.makeText(getContext(), obj.getString("OUT_MESSAGE"), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                } catch (JSONException e) {
+                    loadingDialog.dismissDialog();
+                    e.printStackTrace();
+                    FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
+                FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("tanggal_lahir_customer", String.valueOf(date));
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public void savePhone(Dialog dialog, String phone){
+        //Pendeklarasian queue
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+        dialog.dismiss();
+        loadingDialog.startLoadingDialog();
+        StringRequest stringRequest = new StringRequest(PUT, CustomerApi.ROOT_UPDATE_PHONE + id_customer, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    loadingDialog.dismissDialog();
+                    JSONObject obj = new JSONObject(response);
+                    FancyToast.makeText(getContext(), obj.getString("OUT_MESSAGE"), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                } catch (JSONException e) {
+                    loadingDialog.dismissDialog();
+                    e.printStackTrace();
+                    FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
+                FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("telepon_customer", String.valueOf(phone));
                 return params;
             }
         };
