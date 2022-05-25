@@ -7,4 +7,5 @@ public class CustomerApi {
     public static final String ROOT_LOGIN	    =  ROOT_API + "login-customer";
     public static final String ROOT_REGISTRATION	    =  ROOT_API + "registration";
     public static final String ROOT_GET_CUSTOMER_BY_ID	    =  ROOT_API + "customer-mobile/";
+    public static final String ROOT_UPDATE_NAME	    =  ROOT_API + "customer-name/";
 }

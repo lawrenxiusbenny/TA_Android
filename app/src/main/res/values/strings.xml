@@ -19,6 +19,11 @@
     <string name="sign_up_title">Sign Up</string>
     <string name="cart_title">Order Summary</string>
     <string name="profile_title">Profile</string>
+    <string name="title_edit_name">Edit Full Name</string>
+    <string name="title_edit_phone">Edit Phone Number</string>
+    <string name="title_edit_date">Edit Date Of Birth</string>
+    <string name="title_edit_pass">Edit Password</string>
+
 
 
     <!--button-->
@@ -31,6 +36,9 @@
     <string name="add">Add</string>
     <string name="logout">Logout</string>
     <string name="go_to_login">Go to login</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
 
     <!--  order title  -->
     <string name="add_order">ADD ORDER</string>
@@ -55,7 +63,7 @@
     <!--    Helper text -->
     <string name="helper_name">*required</string>
     <string name="helper_phone">*required, 11-13 characters</string>
-    <string name="helper_date">*required</string>
+    <string name="helper_date">*required, YYYY-MM-DD</string>
     <string name="helper_email">*required, example: roemahsoto@gmail.com</string>
     <string name="helper_password">*required, min. 6 characters</string>
 
@@ -72,6 +80,7 @@
 
     <string name="cart_notlogin">You are not login yet</string>
     <string name="cart_notlogin2">please login first to access this page</string>
+    <string name="menu_notlogin2">please login first to order this menu</string>
 
     <!--  dialog kosong  -->
     <string name="kosong_title">We are sorry</string>

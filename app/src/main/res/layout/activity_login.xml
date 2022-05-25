@@ -84,6 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/green_002"
+                android:textCursorDrawable="@null"
                 android:textSize="8pt"
                 tools:layout_editor_absoluteX="1dp"
                 tools:layout_editor_absoluteY="362dp" />
@@ -132,6 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/green_002"
+                android:textCursorDrawable="@null"
                 android:textSize="8pt"
                 tools:layout_editor_absoluteX="1dp"
                 android:inputType="textPassword"

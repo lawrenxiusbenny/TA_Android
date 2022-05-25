@@ -1,5 +1,6 @@
 package com.lawrenxiusbenny.roemah_soto_android;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,31 +13,45 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.lawrenxiusbenny.roemah_soto_android.api.CustomerApi;
 import com.lawrenxiusbenny.roemah_soto_android.api.MenuApi;
+import com.lawrenxiusbenny.roemah_soto_android.api.PesananApi;
 import com.lawrenxiusbenny.roemah_soto_android.dialog.LoadingDialog;
 import com.lawrenxiusbenny.roemah_soto_android.model.Customer;
 import com.lawrenxiusbenny.roemah_soto_android.model.Menu;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.android.volley.Request.Method.GET;
+import static com.android.volley.Request.Method.PUT;
 
 public class ProfileFragment extends Fragment {
 
@@ -45,6 +60,9 @@ public class ProfileFragment extends Fragment {
     private ConstraintLayout layoutProfile, layoutNotLoginYet;
     private ShimmerFrameLayout shimmerFrameLayout;
 
+    private Customer customer = new Customer();
+
+    private ImageButton btnEditName, btnEditPhone, btnEditDate, btnEditPass;
     private Button btnLogout, btnGoLogin;
 
     private TextInputEditText txtNama,txtPhone, txtDate, txtEmail, txtPassword, txtRoyalty;
@@ -53,8 +71,6 @@ public class ProfileFragment extends Fragment {
     private SharedPreferences.Editor editor;
     public static final String KEY_ID = "id_customer";
     int id_customer=0;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +93,187 @@ public class ProfileFragment extends Fragment {
 
         btnLogout = view.findViewById(R.id.btnLogout);
         btnGoLogin = view.findViewById(R.id.btnGoLoginProfile);
+
+        btnEditName = view.findViewById(R.id.btnEdtName);
+        btnEditPhone = view.findViewById(R.id.btnEdtPhone);
+        btnEditDate = view.findViewById(R.id.btnEdtDate);
+        btnEditPass = view.findViewById(R.id.btnEdtPassword);
+
+        btnEditName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog;
+                dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_edit_name);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                Button btnCancel = dialog.findViewById(R.id.btnCancelEditName);
+                Button btnSave = dialog.findViewById(R.id.btnSaveEditName);
+
+                TextInputEditText txtEditName = dialog.findViewById(R.id.txtInputEditName);
+                TextInputLayout twEditName = dialog.findViewById(R.id.twNameEdit);
+
+                txtEditName.setText(customer.getNama_customer());
+                btnSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cekEditName(dialog,twEditName, txtEditName);
+                    }
+                });
+
+                txtEditName.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        twEditName.setError(null);
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        btnEditPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog;
+                dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_edit_phone);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                Button btnCancel = dialog.findViewById(R.id.btnCancelEditPhone);
+                Button btnSave = dialog.findViewById(R.id.btnSaveEditPhone);
+
+                TextInputEditText txtEditPhone = dialog.findViewById(R.id.txtInputEditPhone);
+                TextInputLayout twEditPhone = dialog.findViewById(R.id.twPhoneEdit);
+
+                txtEditPhone.setText(customer.getTelepon_customer());
+                btnSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cekEditPhone(dialog, twEditPhone, txtEditPhone);
+                    }
+                });
+
+                txtEditPhone.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        twEditPhone.setError(null);
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        btnEditDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog;
+                dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_edit_date);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                final Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                Button btnCancel = dialog.findViewById(R.id.btnCancelEditDate);
+                Button btnSave = dialog.findViewById(R.id.btnSaveEditDate);
+
+                TextInputEditText txtEditDate = dialog.findViewById(R.id.txtInputEditDate);
+                TextInputLayout twEditDate = dialog.findViewById(R.id.twDateEdit);
+
+                txtEditDate.setText(customer.getTanggal_lahir_customer());
+                btnSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cekEditDate(dialog, twEditDate, txtEditDate);
+                    }
+                });
+
+                txtEditDate.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        twEditDate.setError(null);
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                DatePickerDialog.OnDateSetListener onDateSetListener;
+
+                onDateSetListener  = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        month = month+1;
+                        String date = year +"-"+month+"-"+dayOfMonth;
+                        txtEditDate.setText(date);
+                    }
+                };
+
+                txtEditDate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                                getContext(), android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth,onDateSetListener,year,month,day);
+                        datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+                        datePickerDialog.show();
+                    }
+                });
+
+
+            }
+        });
 
         btnGoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +351,36 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    public void cekEditName(Dialog dialog, TextInputLayout twEdit, TextInputEditText txtEdit){
+        String getName = txtEdit.getText().toString();
+
+        if(getName.equalsIgnoreCase("")){
+            twEdit.setError("Full name should not be empty");
+        }else{
+            saveName(dialog,txtEdit.getText().toString());
+        }
+    }
+
+    public void cekEditPhone(Dialog dialog, TextInputLayout twEdit, TextInputEditText txtEdit){
+        String getPhone = txtEdit.getText().toString();
+
+        if(getPhone.length()<11 || getPhone.length()>13){
+            twEdit.setError("Phone number should be between 11-13 characters");
+        }else{
+
+        }
+    }
+
+    public void cekEditDate(Dialog dialog, TextInputLayout twEdit, TextInputEditText txtEdit){
+        String getDate = txtEdit.getText().toString();
+
+        if(getDate.isEmpty()){
+            twEdit.setError("Birth of Date should not be empty");
+        }else{
+
+        }
+    }
+
     public void getDataCustomer(){
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
 
@@ -177,6 +404,11 @@ public class ProfileFragment extends Fragment {
                         String tanggal_lahir_customer = jsonObject.getString("tanggal_lahir_customer");
                         int jumlah_point = jsonObject.getInt("jumlah_point");
 
+                        customer.setNama_customer(nama_customer);
+                        customer.setTelepon_customer(telepon_customer);
+                        customer.setPassword_customer(password_customer);
+                        customer.setTanggal_lahir_customer(tanggal_lahir_customer);
+
                         txtNama.setText(nama_customer);
                         txtPhone.setText(telepon_customer);
                         txtDate.setText(tanggal_lahir_customer);
@@ -196,6 +428,42 @@ public class ProfileFragment extends Fragment {
                 Log.e("error",error.getMessage());
             }
         });
+        queue.add(stringRequest);
+    }
+
+    public void saveName(Dialog dialog, String name){
+        //Pendeklarasian queue
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+        dialog.dismiss();
+        loadingDialog.startLoadingDialog();
+        StringRequest stringRequest = new StringRequest(PUT, CustomerApi.ROOT_UPDATE_NAME + id_customer, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    loadingDialog.dismissDialog();
+                    JSONObject obj = new JSONObject(response);
+                    FancyToast.makeText(getContext(), obj.getString("OUT_MESSAGE"), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                } catch (JSONException e) {
+                    loadingDialog.dismissDialog();
+                    e.printStackTrace();
+                    FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
+                FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("nama_customer", String.valueOf(name));
+                return params;
+            }
+        };
         queue.add(stringRequest);
     }
 }

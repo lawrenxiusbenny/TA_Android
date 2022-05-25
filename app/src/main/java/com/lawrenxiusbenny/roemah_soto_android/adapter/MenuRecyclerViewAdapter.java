@@ -151,13 +151,24 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
                         dialog.setContentView(R.layout.dialog_not_login);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         dialog.show();
-//                        Button btnClose = dialog.findViewById(R.id.btnCloseNotLogin);
-//                        btnClose.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                dialog.dismiss();
-//                            }
-//                        });
+                        Button btnClose = dialog.findViewById(R.id.closeBtnNotLogin);
+                        Button btnGoLogin = dialog.findViewById(R.id.btnGoLoginOrder);
+
+                        btnGoLogin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent i;
+                                i = new Intent(context,LoginActivity.class);
+                                context.startActivity(i);
+                            }
+                        });
+
+                        btnClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
                     }else{
                         Dialog dialog;
                         dialog = new Dialog(context);
