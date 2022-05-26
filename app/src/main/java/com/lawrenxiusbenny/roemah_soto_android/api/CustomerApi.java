@@ -10,4 +10,5 @@ public class CustomerApi {
     public static final String ROOT_UPDATE_NAME	    =  ROOT_API + "customer-name/";
     public static final String ROOT_UPDATE_DATE	    =  ROOT_API + "customer-date/";
     public static final String ROOT_UPDATE_PHONE	    =  ROOT_API + "customer-phone/";
+    public static final String ROOT_UPDATE_PASSWORD	    =  ROOT_API + "customer-password/";
 }

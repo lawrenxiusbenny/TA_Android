@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Roemah_soto_android">
-        <activity android:name=".RegistrationActivity"></activity>
+        <activity android:name=".CouponActivity"></activity>
+        <activity android:name=".ShowPesananTransaksiActivity" />
+        <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity

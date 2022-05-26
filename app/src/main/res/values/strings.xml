@@ -6,6 +6,9 @@
 
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirmation_password">Confirmation Password</string>
     <string name="full_name">Full Name</string>
     <string name="phone_number">Phone Number</string>
     <string name="date_of_birth">Date Of Birth</string>
@@ -23,7 +26,19 @@
     <string name="title_edit_phone">Edit Phone Number</string>
     <string name="title_edit_date">Edit Date Of Birth</string>
     <string name="title_edit_pass">Edit Password</string>
+    <string name="title_history">Transaction History</string>
+    <string name="title_order_history">Order History</string>
+    <string name="title_coupon">Coupon Discount</string>
+    <string name="title_coupon_customer">My Coupon</string>
+    <string name="title_coupon_list">Coupon List</string>
 
+    <!--Coupon discount-->
+    <string name="my_coupon">My Coupon</string>
+    <string name="coupon_list">Coupon List</string>
+    <string name="persentase_potongan">15%</string>
+    <string name="nama_kupon">Nama kupon diskon</string>
+    <string name="deskripsi_kupon">Deskripsi kupon</string>
+    <string name="tanggal_claim">claim at 2022-04-02</string>
 
 
     <!--button-->
@@ -82,9 +97,23 @@
     <string name="cart_notlogin2">please login first to access this page</string>
     <string name="menu_notlogin2">please login first to order this menu</string>
 
+    <!--    History page-->
+    <string name="history_kosong">You have not records yet</string>
+    <string name="history_kosong2">Add your records like others with checkout your transaction</string>
+    <string name="title_transaction">TRANS</string>
+    <string name="queue">001</string>
+    <string name="id_transaction">ROESO-20220513-001</string>
+    <string name="title_tanggal_transaksi">Date</string>
+    <string name="tanggal_transaksi">2022-05-13 10:38:08</string>
+    <string name="title_metode">Payment Method</string>
+    <string name="metode">Cashless</string>
+    <string name="title_total">Total Transaction</string>
+    <string name="total_transaction">IDR 3,000,000</string>
+    <string name="titik_dua">:</string>
+
     <!--  dialog kosong  -->
     <string name="kosong_title">We are sorry</string>
-    <string name="kosong_body">the menu is not available for a while</string>
+    <string name="kosong_body">The menu is not available for a while</string>
 
     <!--  dialog delete  -->
     <string name="delete_title">Confirmation Delete</string>

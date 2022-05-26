@@ -158,13 +158,6 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
             }
             txtJumlahPesanan.setText(String.valueOf(pesanan.getJumlah_pesanan()));
 
-            mParent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FancyToast.makeText(context, pesanan.getGambar_menu(), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
-                }
-            });
-
             txtEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

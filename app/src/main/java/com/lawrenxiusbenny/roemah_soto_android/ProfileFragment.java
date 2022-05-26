@@ -39,6 +39,7 @@ import com.lawrenxiusbenny.roemah_soto_android.api.CustomerApi;
 import com.lawrenxiusbenny.roemah_soto_android.api.MenuApi;
 import com.lawrenxiusbenny.roemah_soto_android.api.PesananApi;
 import com.lawrenxiusbenny.roemah_soto_android.dialog.LoadingDialog;
+import com.lawrenxiusbenny.roemah_soto_android.function.AESCrypt;
 import com.lawrenxiusbenny.roemah_soto_android.model.Customer;
 import com.lawrenxiusbenny.roemah_soto_android.model.Menu;
 import com.shashank.sony.fancytoastlib.FancyToast;
@@ -65,7 +66,7 @@ public class ProfileFragment extends Fragment {
     private Customer customer = new Customer();
 
     private ImageButton btnEditName, btnEditPhone, btnEditDate, btnEditPass;
-    private Button btnLogout, btnGoLogin;
+    private Button btnLogout, btnGoLogin, btnClaimCoupon;
 
     private TextInputEditText txtNama,txtPhone, txtDate, txtEmail, txtPassword, txtRoyalty;
 
@@ -100,6 +101,17 @@ public class ProfileFragment extends Fragment {
         btnEditPhone = view.findViewById(R.id.btnEdtPhone);
         btnEditDate = view.findViewById(R.id.btnEdtDate);
         btnEditPass = view.findViewById(R.id.btnEdtPassword);
+
+        btnClaimCoupon = view.findViewById(R.id.btnClaimCoupon);
+
+        btnClaimCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(),CouponActivity.class);
+                startActivity(i);
+            }
+        });
+
 
         btnEditName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,6 +290,97 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        btnEditPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog;
+                dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_edit_password);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                Button btnCancel = dialog.findViewById(R.id.btnCancelEditPassword);
+                Button btnSave = dialog.findViewById(R.id.btnSaveEditPassword);
+
+                TextInputEditText txtEditPasswordOld = dialog.findViewById(R.id.txtInputEditPasswordOld);
+                TextInputLayout twEditPasswordOld = dialog.findViewById(R.id.twPasswordOldEdit);
+
+                TextInputEditText txtEditPasswordNew = dialog.findViewById(R.id.txtInputEditPasswordNew);
+                TextInputLayout twEditPasswordNew = dialog.findViewById(R.id.twPasswordNewEdit);
+
+                TextInputEditText txtEditPasswordNewConf = dialog.findViewById(R.id.txtInputEditPasswordNewConf);
+                TextInputLayout twEditPasswordNewConf = dialog.findViewById(R.id.twPasswordNewConfEdit);
+
+                btnSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cekEditPassword(dialog, twEditPasswordOld, txtEditPasswordOld, twEditPasswordNew,
+                                txtEditPasswordNew, twEditPasswordNewConf, txtEditPasswordNewConf);
+                    }
+                });
+
+                txtEditPasswordOld.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        twEditPasswordOld.setError(null);
+                    }
+                });
+
+                txtEditPasswordNew.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        twEditPasswordNew.setError(null);
+                    }
+                });
+
+                txtEditPasswordNewConf.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        twEditPasswordNewConf.setError(null);
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+
+
         btnGoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -398,6 +501,49 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    public void cekEditPassword(Dialog dialog, TextInputLayout twOld, TextInputEditText txtOld, TextInputLayout twNew, TextInputEditText txtNew, TextInputLayout twConf, TextInputEditText txtConf){
+        String getOld = txtOld.getText().toString();
+        String getNew = txtNew.getText().toString();
+        String getConf = txtConf.getText().toString();
+
+        boolean cekOld, cekNew, cekConf;
+        cekOld = false;
+        cekNew = false;
+        cekConf = false;
+
+        if(getOld.isEmpty()){
+            twOld.setError("Old password should not be empty");
+        }else if(getOld.length()<6){
+            twOld.setError("Old password should be at least 6 characters");
+        }else{
+            cekOld = true;
+        }
+
+        if(getNew.isEmpty()){
+            twNew.setError("New password should not be empty");
+        }else if(getNew.length()<6){
+            twNew.setError("New password should be at least 6 characters");
+        }else{
+            cekNew = true;
+        }
+
+        if(getConf.isEmpty()){
+            twConf.setError("Confirmation password should not be empty");
+        }else if(getConf.length()<6){
+            twConf.setError("Confirmation password should be at least 6 characters");
+        }else if(!getConf.equalsIgnoreCase(getNew)){
+            twConf.setError("Confirmation password should be same with new password");
+        }else{
+            cekConf = true;
+        }
+
+        if(cekOld && cekNew && cekConf){
+            savePassword(dialog,txtOld.getText().toString(),txtNew.getText().toString());
+            Fragment fragment = new ProfileFragment();
+            loadFragment(fragment);
+        }
+    }
+
     public void getDataCustomer(){
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
 
@@ -420,17 +566,25 @@ public class ProfileFragment extends Fragment {
                         String telepon_customer = jsonObject.getString("telepon_customer");
                         String tanggal_lahir_customer = jsonObject.getString("tanggal_lahir_customer");
                         int jumlah_point = jsonObject.getInt("jumlah_point");
+                        AESCrypt aesCrypt = new AESCrypt();
 
                         customer.setNama_customer(nama_customer);
                         customer.setTelepon_customer(telepon_customer);
                         customer.setPassword_customer(password_customer);
                         customer.setTanggal_lahir_customer(tanggal_lahir_customer);
 
+                        String passDecrypt;
+                        try {
+                            passDecrypt = aesCrypt.decrypt(password_customer);
+                            txtPassword.setText(passDecrypt);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         txtNama.setText(nama_customer);
                         txtPhone.setText(telepon_customer);
                         txtDate.setText(tanggal_lahir_customer);
                         txtEmail.setText(email_customer);
-                        txtPassword.setText(password_customer);
                         txtRoyalty.setText(String.valueOf(jumlah_point));
                     }
                 }catch (JSONException e){
@@ -555,4 +709,49 @@ public class ProfileFragment extends Fragment {
         };
         queue.add(stringRequest);
     }
+
+    public void savePassword(Dialog dialog, String oldPassword, String newPassword){
+        //Pendeklarasian queue
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+
+        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+        dialog.dismiss();
+        loadingDialog.startLoadingDialog();
+
+        StringRequest stringRequest = new StringRequest(PUT, CustomerApi.ROOT_UPDATE_PASSWORD + id_customer, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    loadingDialog.dismissDialog();
+                    JSONObject obj = new JSONObject(response);
+                    if(obj.getString("OUT_STAT").equalsIgnoreCase("T")){
+                        FancyToast.makeText(getContext(), obj.getString("OUT_MESSAGE"), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                    }else{
+                        FancyToast.makeText(getContext(), obj.getString("OUT_MESSAGE"), FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    }
+
+                } catch (JSONException e) {
+                    loadingDialog.dismissDialog();
+                    e.printStackTrace();
+                    FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
+                FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("old_password", String.valueOf(oldPassword));
+                params.put("new_password", String.valueOf(newPassword));
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
 }
+

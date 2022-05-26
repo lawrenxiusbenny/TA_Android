@@ -57,8 +57,6 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
     private Context context;
     private Activity activity;
 
-
-
     MeowBottomNavigation bottomNavigation;
 
     private SharedPreferences sPreferences;
