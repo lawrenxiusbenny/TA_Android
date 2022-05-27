@@ -31,6 +31,8 @@
     <string name="title_coupon">Coupon Discount</string>
     <string name="title_coupon_customer">My Coupon</string>
     <string name="title_coupon_list">Coupon List</string>
+    <string name="title_checkout">Checkout</string>
+    <string name="title_choose_payment">Choose payment</string>
 
     <!--Coupon discount-->
     <string name="my_coupon">My Coupon</string>
@@ -41,7 +43,6 @@
     <string name="tanggal_claim">claim at 2022-04-02</string>
     <string name="jumlah_point_title">Jumlah point tukar</string>
     <string name="jumlah_point">20 point</string>
-
 
 
     <!--button-->
@@ -57,6 +58,8 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="btn_claim">claim</string>
+    <string name="btn_choose_coupon">Choose coupon discount</string>
+    <string name="btn_continue">continue</string>
 
 
     <!--  order title  -->
@@ -73,6 +76,8 @@
     <string name="hint_date">YYYY-MM-DD</string>
     <string name="hint_input_jumlah">input a number</string>
     <string name="hint_input_note">input if necesssary</string>
+    <string name="hint_payment">payment</string>
+    <string name="hint_chosen_coupon">chosen coupon</string>
 
     <!-- search hint -->
     <string name="hint_search_menu">Search your craving here...</string>

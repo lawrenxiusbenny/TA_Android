@@ -105,6 +105,14 @@ public class CartFragment extends Fragment {
             }
         });
 
+        btnCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(getContext(), CheckoutActivity.class);
+                startActivity(i);
+            }
+        });
         loadPesanan();
 
         return view;
@@ -150,6 +158,7 @@ public class CartFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
                 return false;
             }
         });

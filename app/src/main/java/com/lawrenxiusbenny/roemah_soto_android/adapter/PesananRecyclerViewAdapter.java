@@ -103,6 +103,37 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
         return (pesananListFiltered != null) ? pesananListFiltered.size() : 0;
     }
 
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String userInput = charSequence.toString();
+                if (userInput.isEmpty()) {
+                    pesananListFiltered = pesananList;
+                }
+                else {
+                    List<Pesanan> filteredList = new ArrayList<>();
+                    for(Pesanan pesanan : pesananList) {
+                        if(String.valueOf(pesanan.getNama_menu()).toLowerCase().contains(userInput) ||
+                                pesanan.getStringHarga().toLowerCase().contains(userInput) ||
+                                pesanan.getStringSubTotal().toLowerCase().contains(userInput)) {
+                            filteredList.add(pesanan);
+                        }
+                    }
+                    pesananListFiltered = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = pesananListFiltered;
+                return filterResults;
+            }
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                pesananListFiltered = (ArrayList<Pesanan>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
     public class PesananViewHolder extends RecyclerView.ViewHolder {
 
         private TextView txtNamaMenu, txtHargaMenu, txtJumlahPesanan, txtSubTotal;
@@ -263,37 +294,6 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
                     .replace(R.id.fragment_cart, fragment)
                     .addToBackStack(null)
                     .commit();
-        }
-
-        public Filter getFilter() {
-            return new Filter() {
-                @Override
-                protected FilterResults performFiltering(CharSequence charSequence) {
-                    String userInput = charSequence.toString();
-                    if (userInput.isEmpty()) {
-                        pesananListFiltered = pesananList;
-                    }
-                    else {
-                        List<Pesanan> filteredList = new ArrayList<>();
-                        for(Pesanan pesanan : pesananList) {
-                            if(String.valueOf(pesanan.getNama_menu()).toLowerCase().contains(userInput) ||
-                                    pesanan.getStringHarga().toLowerCase().contains(userInput) ||
-                                    pesanan.getStringSubTotal().toLowerCase().contains(userInput)) {
-                                filteredList.add(pesanan);
-                            }
-                        }
-                        pesananListFiltered = filteredList;
-                    }
-                    FilterResults filterResults = new FilterResults();
-                    filterResults.values = pesananListFiltered;
-                    return filterResults;
-                }
-                @Override
-                protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                    pesananListFiltered = (ArrayList<Pesanan>) filterResults.values;
-                    notifyDataSetChanged();
-                }
-            };
         }
 
         public void updatePesanan(int id, int jumlah, String catatan) {
