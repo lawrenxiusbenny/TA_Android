@@ -5,10 +5,33 @@
     android:layout_height="match_parent"
     tools:context=".CouponListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_layout_coupon_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/item_shimmer_coupon"/>
+            <include layout="@layout/item_shimmer_coupon"/>
+            <include layout="@layout/item_shimmer_coupon"/>
+            <include layout="@layout/item_shimmer_coupon"/>
+            <include layout="@layout/item_shimmer_coupon"/>
+            <include layout="@layout/item_shimmer_coupon"/>
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <ScrollView
+        android:id="@+id/layoutCouponList"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:fillViewport="true">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_coupon_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
 
 </FrameLayout>

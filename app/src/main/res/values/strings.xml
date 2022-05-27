@@ -39,6 +39,9 @@
     <string name="nama_kupon">Nama kupon diskon</string>
     <string name="deskripsi_kupon">Deskripsi kupon</string>
     <string name="tanggal_claim">claim at 2022-04-02</string>
+    <string name="jumlah_point_title">Jumlah point tukar</string>
+    <string name="jumlah_point">20 point</string>
+
 
 
     <!--button-->
@@ -53,6 +56,7 @@
     <string name="go_to_login">Go to login</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="btn_claim">claim</string>
 
 
     <!--  order title  -->

@@ -73,6 +73,8 @@ public class ProfileFragment extends Fragment {
     private SharedPreferences sPreferences;
     private SharedPreferences.Editor editor;
     public static final String KEY_ID = "id_customer";
+    public static final String KEY_POINT = "jumlah_point";
+    public static final String KEY_TRANSAKSI = "id_transaksi";
     int id_customer=0;
 
     @Override
@@ -419,6 +421,8 @@ public class ProfileFragment extends Fragment {
 
                         editor = sPreferences.edit();
                         editor.putInt(KEY_ID,0);
+                        editor.putInt(KEY_POINT,0);
+                        editor.putString(KEY_TRANSAKSI,"");
                         editor.commit();
 
                         new Handler().postDelayed(new Runnable() {
@@ -565,7 +569,12 @@ public class ProfileFragment extends Fragment {
                         String password_customer = jsonObject.getString("password_customer");
                         String telepon_customer = jsonObject.getString("telepon_customer");
                         String tanggal_lahir_customer = jsonObject.getString("tanggal_lahir_customer");
-                        int jumlah_point = jsonObject.getInt("jumlah_point");
+                        int jumlah_point = 0;
+
+                        if(!jsonObject.getString("id_royalty_point").equalsIgnoreCase("null")){
+                            jumlah_point = jsonObject.getInt("jumlah_point");
+                        }
+
                         AESCrypt aesCrypt = new AESCrypt();
 
                         customer.setNama_customer(nama_customer);
@@ -585,7 +594,12 @@ public class ProfileFragment extends Fragment {
                         txtPhone.setText(telepon_customer);
                         txtDate.setText(tanggal_lahir_customer);
                         txtEmail.setText(email_customer);
-                        txtRoyalty.setText(String.valueOf(jumlah_point));
+                        txtRoyalty.setText(String.valueOf(jumlah_point)+" point");
+
+                        //SAVE JUMLAH ROYALTY POINT
+                        editor = sPreferences.edit();
+                        editor.putInt(KEY_POINT,jumlah_point);
+                        editor.commit();
                     }
                 }catch (JSONException e){
                     e.printStackTrace();
