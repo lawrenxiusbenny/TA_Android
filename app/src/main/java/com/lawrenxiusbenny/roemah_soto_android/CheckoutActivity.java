@@ -102,6 +102,7 @@ public class CheckoutActivity extends AppCompatActivity {
         shimmerFrameLayout = findViewById(R.id.shimmer_layout_checkout);
         layoutCheckout = findViewById(R.id.layoutViewCheckout);
 
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
         setDropDown();
         loadPesanan();
 
@@ -109,10 +110,10 @@ public class CheckoutActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setPreferences();
                 Intent i;
                 i = new Intent(view.getContext(),MainActivity.class);
                 startActivity(i);
-                
             }
         });
 
