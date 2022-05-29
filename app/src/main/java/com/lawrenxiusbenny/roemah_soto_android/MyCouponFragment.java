@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,7 +46,8 @@ public class MyCouponFragment extends Fragment {
     private MyCouponRecyclerViewAdapter adapter;
     private List<Coupon> listCoupon;
 
-    private ScrollView layoutRecycler;
+    private SwipeRefreshLayout layoutRecycler;
+    private ConstraintLayout layoutKosong;
 
     ShimmerFrameLayout shimmerFrameLayout;
     private View view;
@@ -64,6 +66,7 @@ public class MyCouponFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_my_coupon, container, false);
 
         layoutRecycler = view.findViewById(R.id.layoutMyCoupon);
+        layoutKosong = view.findViewById(R.id.layoutKosongMyCoupon);
 
         shimmerFrameLayout = view.findViewById(R.id.shimmer_layout_my_coupon);
         //get id customer
@@ -79,6 +82,12 @@ public class MyCouponFragment extends Fragment {
         shimmerFrameLayout.startShimmer();
         setAdapter();
         getData();
+        layoutRecycler.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
     }
 
     public void setAdapter(){
@@ -105,6 +114,8 @@ public class MyCouponFragment extends Fragment {
 
                     if(jsonArray.length()!=0){
                         layoutRecycler.setVisibility(View.VISIBLE);
+                    }else{
+                        layoutKosong.setVisibility(View.VISIBLE);
                     }
                     if(!listCoupon.isEmpty())
                         listCoupon.clear();
@@ -125,6 +136,7 @@ public class MyCouponFragment extends Fragment {
                         listCoupon.add(coupon);
                     }
                     adapter.notifyDataSetChanged();
+                    layoutRecycler.setRefreshing(false);
                 }catch (JSONException e){
                     e.printStackTrace();
                 }

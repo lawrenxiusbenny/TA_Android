@@ -33,6 +33,7 @@
     <string name="title_coupon_list">Coupon List</string>
     <string name="title_checkout">Checkout</string>
     <string name="title_choose_payment">Choose payment</string>
+    <string name="title_choose_coupon">Choose your coupon</string>
 
     <!--Coupon discount-->
     <string name="my_coupon">My Coupon</string>
@@ -43,6 +44,7 @@
     <string name="tanggal_claim">claim at 2022-04-02</string>
     <string name="jumlah_point_title">Jumlah point tukar</string>
     <string name="jumlah_point">20 point</string>
+    <string name="nama_chosen_kupon">15% off | Coupon Name</string>
 
 
     <!--button-->
@@ -127,6 +129,14 @@
     <!--  dialog delete  -->
     <string name="delete_title">Confirmation Delete</string>
     <string name="delete_body">Do you want to delete selected order?</string>
+
+    <!-- My Coupon -->
+    <string name="kosong_my_coupon_title">No coupon found</string>
+    <string name="kosong_my_coupon_body">Claim your coupon to get more offers</string>
+
+    <!-- My Coupon -->
+    <string name="kosong_coupon_list_title">No coupon found</string>
+    <string name="kosong_coupon_list_body">There is nothing to offer right now, comeback later</string>
 
     <!--  dialog Logout  -->
     <string name="logout_title">Confirmation Logout</string>

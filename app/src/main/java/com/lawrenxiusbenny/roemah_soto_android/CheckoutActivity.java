@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.lawrenxiusbenny.roemah_soto_android.adapter.PesananRecyclerViewAdapter;
 import com.lawrenxiusbenny.roemah_soto_android.adapter.ShowPesananRecyclerViewAdapter;
 import com.lawrenxiusbenny.roemah_soto_android.api.PesananApi;
@@ -47,7 +52,12 @@ public class CheckoutActivity extends AppCompatActivity {
     private ShowPesananRecyclerViewAdapter adapter;
     private List<Pesanan> listPesanan;
 
-    private TextView txtTotalHarga;
+    private Button btnChooseCoupon;
+
+    private Chip chipChosen;
+    private ChipGroup chipGroupChosen;
+
+    private TextView txtTotalHarga, txtTitleChosenCoupon;
 
     private AutoCompleteTextView exposedDropDownPayment;
     private String[] ddPayment = new String[] {"Cash","Cashless"};
@@ -59,8 +69,16 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private SharedPreferences sPreferences;
     public static final String KEY_ID = "id_customer";
-//    private SharedPreferences.Editor editor;
+    public static final String KEY_ID_KUPON = "id_kupon_diskon";
+    public static final String KEY_NAMA_KUPON = "nama_kupon";
+    public static final String KEY_PERSENTASE_POTONGAN = "persentase_potongan";
+    private SharedPreferences.Editor editor;
     private int id_customer = 0;
+    private int id_kupon_diskon = 0;
+    private String nama_kupon = "";
+    private int persentase_potongan = 0;
+    private double harga = 0;
+    private double discount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +87,15 @@ public class CheckoutActivity extends AppCompatActivity {
         //cek sudah login atau belum
         sPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         id_customer = sPreferences.getInt(KEY_ID,Context.MODE_PRIVATE);
+        id_kupon_diskon = sPreferences.getInt(KEY_ID_KUPON,Context.MODE_PRIVATE);
+        nama_kupon = sPreferences.getString(KEY_NAMA_KUPON,String.valueOf(MODE_PRIVATE));
+        persentase_potongan = sPreferences.getInt(KEY_PERSENTASE_POTONGAN,Context.MODE_PRIVATE);
+
+
+        btnChooseCoupon = findViewById(R.id.btnChooseCoupon);
+        txtTitleChosenCoupon = findViewById(R.id.txtTitleChosenCoupon);
+        chipChosen = findViewById(R.id.chipChosenCoupon);
+        chipGroupChosen = findViewById(R.id.chipGroupChosenCoupon);
 
         txtTotalHarga = findViewById(R.id.totalHargaCheckout);
 
@@ -77,11 +104,41 @@ public class CheckoutActivity extends AppCompatActivity {
 
         setDropDown();
         loadPesanan();
+
         btnBack = findViewById(R.id.btn_back_checkout);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                Intent i;
+                i = new Intent(view.getContext(),MainActivity.class);
+                startActivity(i);
+                
+            }
+        });
+
+        chipChosen.setOnCloseIconClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chipGroupChosen.setVisibility(view.GONE);
+                txtTitleChosenCoupon.setVisibility(view.GONE);
+                btnChooseCoupon.setVisibility(view.VISIBLE);
+
+                harga = harga + discount;
+                discount = 0;
+                NumberFormat formatter = new DecimalFormat("#,###");
+                txtTotalHarga.setText("IDR "+ formatter.format(harga));
+
+                //set sPreferences
+                setPreferences();
+            }
+        });
+
+        btnChooseCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(view.getContext(),ChooseCouponActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -125,6 +182,16 @@ public class CheckoutActivity extends AppCompatActivity {
                 try {
                     shimmerFrameLayout.stopShimmer();
                     shimmerFrameLayout.setVisibility(View.GONE);
+                    if(id_kupon_diskon == 0){
+                        btnChooseCoupon.setVisibility(View.VISIBLE);
+                    }else{
+                        btnChooseCoupon.setVisibility(View.GONE);
+                        txtTitleChosenCoupon.setVisibility(View.VISIBLE);
+                        chipGroupChosen.setVisibility(View.VISIBLE);
+                        String title;
+                        title = persentase_potongan+"% off | "+nama_kupon;
+                        chipChosen.setText(title);
+                    }
                     layoutCheckout.setVisibility(View.VISIBLE);
 
 
@@ -155,12 +222,12 @@ public class CheckoutActivity extends AppCompatActivity {
                         total = total+jumlah_pesanan;
                     }
 
-                    double harga = response.getDouble("TOTAL_HARGA");
-
+                    harga = response.getDouble("TOTAL_HARGA");
+                    discount = (persentase_potongan * harga)/100;
+                    harga = harga - discount;
                     NumberFormat formatter = new DecimalFormat("#,###");
 
                     txtTotalHarga.setText("IDR "+ formatter.format(harga));
-
                     adapter.notifyDataSetChanged();
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -173,5 +240,13 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         });
         queue.add(stringRequest);
+    }
+
+    public void setPreferences(){
+        editor = sPreferences.edit();
+        editor.putInt(KEY_ID_KUPON,0);
+        editor.putString(KEY_NAMA_KUPON,"");
+        editor.putInt(KEY_PERSENTASE_POTONGAN,0);
+        editor.commit();
     }
 }

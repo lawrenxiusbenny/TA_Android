@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CouponListFragment">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_layout_coupon_list"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -33,5 +35,52 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutKosongCouponList"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="560dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="285dp"
+            android:layout_height="286dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/empty_coupon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="304dp"
+            android:gravity="center"
+            android:text="@string/kosong_coupon_list_title"
+            android:textColor="@color/green_002"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="660px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/kosong_coupon_list_body"
+            android:textSize="8pt"
+            android:textColor="@color/green_002"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintVertical_bias="0.062" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

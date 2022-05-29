@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,6 +43,7 @@ public class CouponListFragment extends Fragment {
     private List<Coupon> listCoupon;
 
     private ScrollView layoutRecycler;
+    private ConstraintLayout layoutKosong;
 
     ShimmerFrameLayout shimmerFrameLayout;
     private View view;
@@ -60,6 +62,7 @@ public class CouponListFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_coupon_list, container, false);
 
         layoutRecycler = view.findViewById(R.id.layoutCouponList);
+        layoutKosong = view.findViewById(R.id.layoutKosongCouponList);
 
         shimmerFrameLayout = view.findViewById(R.id.shimmer_layout_coupon_list);
         //get id customer
@@ -100,6 +103,8 @@ public class CouponListFragment extends Fragment {
 
                     if(jsonArray.length()!=0){
                         layoutRecycler.setVisibility(View.VISIBLE);
+                    }else{
+                        layoutKosong.setVisibility(View.VISIBLE);
                     }
                     if(!listCoupon.isEmpty())
                         listCoupon.clear();
