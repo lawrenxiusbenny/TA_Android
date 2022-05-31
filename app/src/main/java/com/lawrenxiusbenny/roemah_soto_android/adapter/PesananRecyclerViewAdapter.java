@@ -306,7 +306,7 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
                     try {
                         loadingDialog.dismissDialog();
                         JSONObject obj = new JSONObject(response);
-                        FancyToast.makeText(context, obj.getString("OUT_MESSAGE"), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        FancyToast.makeText(context, "Order data updated successfully", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                     } catch (JSONException e) {
                         loadingDialog.dismissDialog();
                         e.printStackTrace();
@@ -341,7 +341,7 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
                     try {
                         loadingDialog.dismissDialog();
                         JSONObject obj = new JSONObject(response);
-                        FancyToast.makeText(context, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        FancyToast.makeText(context, "Order data deleted successfully",FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                     } catch (JSONException e) {
                         loadingDialog.dismissDialog();
                         e.printStackTrace();

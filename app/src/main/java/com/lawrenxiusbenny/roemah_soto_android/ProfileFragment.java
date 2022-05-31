@@ -79,7 +79,7 @@ public class ProfileFragment extends Fragment {
     public static final String KEY_EMAIL_CUSTOMER = "email_customer";
     public static final String KEY_TELEPON_CUSTOMER = "telepon_customer";
 
-    public static final String KEY_ID_KUPON = "id_kupon_diskon";
+    public static final String KEY_ID_KUPON = "id_kupon_customer";
     public static final String KEY_NAMA_KUPON = "nama_kupon";
     public static final String KEY_PERSENTASE_POTONGAN = "persentase_potongan";
     public static final String KEY_PAYMENT = "va_number_or_link_payment";

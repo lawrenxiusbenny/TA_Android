@@ -16,11 +16,12 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_trans"
         android:id="@+id/linear_layout_my_coupon"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="100">
 
         <LinearLayout
-            android:layout_width="350px"
-            android:layout_height="350px"
+            android:layout_width="140dp"
+            android:layout_height="130dp"
             android:orientation="vertical"
             android:background="@color/white_001">
             <LinearLayout
@@ -69,7 +70,7 @@
                 <TextView
                     android:id="@+id/txtDeskripsiMy"
                     android:layout_width="match_parent"
-                    android:layout_height="120px"
+                    android:layout_height="50dp"
                     android:textSize="10dp"
                     android:textColor="@color/green_002"
                     android:layout_marginBottom="5dp"

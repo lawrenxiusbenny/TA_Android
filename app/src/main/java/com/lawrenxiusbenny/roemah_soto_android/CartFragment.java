@@ -64,6 +64,10 @@ public class CartFragment extends Fragment {
 
     private SharedPreferences sPreferences;
     public static final String KEY_ID = "id_customer";
+    public static final String KEY_ID_KUPON = "id_kupon_customer";
+    public static final String KEY_NAMA_KUPON = "nama_kupon";
+    public static final String KEY_PERSENTASE_POTONGAN = "persentase_potongan";
+    public static final String KEY_PAYMENT = "va_number_or_link_payment";
     private SharedPreferences.Editor editor;
     private int id_customer = 0;
 
@@ -93,6 +97,12 @@ public class CartFragment extends Fragment {
         //cek sudah login atau belum
         sPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         id_customer = sPreferences.getInt(KEY_ID,Context.MODE_PRIVATE);
+        editor = sPreferences.edit();
+        editor.putInt(KEY_ID_KUPON,0);
+        editor.putString(KEY_NAMA_KUPON,"");
+        editor.putInt(KEY_PERSENTASE_POTONGAN,0);
+        editor.putString(KEY_PAYMENT,"");
+        editor.commit();
 
         btnGoLogin = view.findViewById(R.id.btnGoLoginCart);
 

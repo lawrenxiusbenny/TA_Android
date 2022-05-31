@@ -31,12 +31,12 @@ public class ChooseCouponRecyclerViewAdapter extends RecyclerView.Adapter<Choose
 
 
     private SharedPreferences sPreferences;
-    public static final String KEY_ID_KUPON = "id_kupon_diskon";
+    public static final String KEY_ID_KUPON = "id_kupon_customer";
     public static final String KEY_NAMA_KUPON = "nama_kupon";
     public static final String KEY_PERSENTASE_POTONGAN = "persentase_potongan";
 
     private SharedPreferences.Editor editor;
-    private int id_kupon_diskon = 0;
+    private int id_kupon_customer = 0;
     private String nama_kupon = "";
     private int persentase_potongan = 0;
 
@@ -71,7 +71,7 @@ public class ChooseCouponRecyclerViewAdapter extends RecyclerView.Adapter<Choose
             @Override
             public void onClick(View view) {
                 loadingDialog.startLoadingDialog();
-                setPreferences(coupon.getId_kupon_diskon(), coupon.getNama_kupon(), coupon.getPersentase_potongan());
+                setPreferences(coupon.getId_kupon_customer(), coupon.getNama_kupon(), coupon.getPersentase_potongan());
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -84,10 +84,10 @@ public class ChooseCouponRecyclerViewAdapter extends RecyclerView.Adapter<Choose
         });
     }
 
-    public void setPreferences(int id_kupon_diskon, String nama_kupon, int persentase_potongan){
+    public void setPreferences(int id_kupon_customer, String nama_kupon, int persentase_potongan){
         sPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
         editor = sPreferences.edit();
-        editor.putInt(KEY_ID_KUPON,id_kupon_diskon);
+        editor.putInt(KEY_ID_KUPON,id_kupon_customer);
         editor.putString(KEY_NAMA_KUPON,nama_kupon);
         editor.putInt(KEY_PERSENTASE_POTONGAN,persentase_potongan);
         editor.commit();

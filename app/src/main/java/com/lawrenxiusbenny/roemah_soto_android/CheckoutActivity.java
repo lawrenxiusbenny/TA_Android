@@ -27,6 +27,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.chip.Chip;
@@ -36,6 +37,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.lawrenxiusbenny.roemah_soto_android.adapter.PesananRecyclerViewAdapter;
 import com.lawrenxiusbenny.roemah_soto_android.adapter.ShowPesananRecyclerViewAdapter;
 import com.lawrenxiusbenny.roemah_soto_android.api.PesananApi;
+import com.lawrenxiusbenny.roemah_soto_android.api.TransactionApi;
 import com.lawrenxiusbenny.roemah_soto_android.dialog.LoadingDialog;
 import com.lawrenxiusbenny.roemah_soto_android.model.Midtrans;
 import com.lawrenxiusbenny.roemah_soto_android.model.Pesanan;
@@ -62,10 +64,13 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static com.android.volley.Request.Method.GET;
+import static com.android.volley.Request.Method.POST;
 
 
 public class CheckoutActivity extends AppCompatActivity implements TransactionFinishedCallback {
@@ -96,7 +101,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
     public static final String KEY_NAMA_CUSTOMER = "nama_customer";
     public static final String KEY_EMAIL_CUSTOMER = "email_customer";
     public static final String KEY_TELEPON_CUSTOMER = "telepon_customer";
-    public static final String KEY_ID_KUPON = "id_kupon_diskon";
+    public static final String KEY_ID_KUPON = "id_kupon_customer";
     public static final String KEY_NAMA_KUPON = "nama_kupon";
     public static final String KEY_PERSENTASE_POTONGAN = "persentase_potongan";
     public static final String KEY_PAYMENT = "va_number_or_link_payment";
@@ -105,7 +110,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
     private static String nama_customer="";
     private static String email_customer="";
     private static String telepon_customer="";
-    private int id_kupon_diskon = 0;
+    private int id_kupon_customer = 0;
     private String nama_kupon = "";
     private int persentase_potongan = 0;
     private double harga = 0;
@@ -155,10 +160,14 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     @Override
                     public void onClick(View view) {
                         if(payment.equalsIgnoreCase("Cashless")){
-                            MidtransSDK.getInstance().setTransactionRequest(transactionRequest(listPesanan,String.valueOf(id_customer),harga,1,"nama_customer"));
+                            dialog.dismiss();
+                            MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan,listPesanan,String.valueOf(id_customer),harga,1,"nama_customer"));
                             MidtransSDK.getInstance().startPaymentUiFlow(view.getContext());
                         }else{
-                            
+                            dialog.dismiss();
+                            addDataTransactionCash(id_customer,id_kupon_customer,harga,"Cash","Belum Lunas");
+                            Intent i = new Intent(CheckoutActivity.this,MainActivity.class);
+                            startActivity(i);
                         }
                     }
                 });
@@ -200,7 +209,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
         nama_customer = sPreferences.getString(KEY_NAMA_CUSTOMER,String.valueOf(Context.MODE_PRIVATE));
         email_customer = sPreferences.getString(KEY_EMAIL_CUSTOMER,String.valueOf(Context.MODE_PRIVATE));
         telepon_customer = sPreferences.getString(KEY_TELEPON_CUSTOMER,String.valueOf(Context.MODE_PRIVATE));
-        id_kupon_diskon = sPreferences.getInt(KEY_ID_KUPON,Context.MODE_PRIVATE);
+        id_kupon_customer = sPreferences.getInt(KEY_ID_KUPON,Context.MODE_PRIVATE);
         nama_kupon = sPreferences.getString(KEY_NAMA_KUPON,String.valueOf(MODE_PRIVATE));
         persentase_potongan = sPreferences.getInt(KEY_PERSENTASE_POTONGAN,Context.MODE_PRIVATE);
     }
@@ -230,11 +239,13 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
 
     @Override
     public void onTransactionFinished(TransactionResult result) {
+        Intent i = new Intent(CheckoutActivity.this,MainActivity.class);
         if(result.getResponse() != null){
             switch (result.getStatus()){
                 case TransactionResult.STATUS_SUCCESS:
 //                    FancyToast.makeText(CheckoutActivity.this, "Transaction Finished",FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-                    addDataTransactionSuccess();
+                    addDataTransactionSuccess(id_customer,id_kupon_customer, harga,"Cashless","Lunas",result.getResponse().getPaymentType());
+                    startActivity(i);
                     break;
                 case TransactionResult.STATUS_PENDING:
 //                    FancyToast.makeText(CheckoutActivity.this, "Transaction Pending, more info in your transaction history",FancyToast.LENGTH_SHORT, FancyToast.INFO, false).show();
@@ -255,7 +266,8 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                         va_number_or_link_payment = result.getResponse().getDeeplinkUrl();
                     }
                     paymentPendingHandle(va_number_or_link_payment);
-                    addDataTransactionPending();
+                    addDataTransactionPending(id_customer,id_kupon_customer, harga,"Cashless","Belum Lunas",result.getResponse().getPaymentType(),va_number_or_link_payment);
+                    startActivity(i);
                     break;
                 case TransactionResult.STATUS_FAILED:
                     FancyToast.makeText(CheckoutActivity.this, "Transaction Failed",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
@@ -284,18 +296,32 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
         cd.setFirstName(nama_customer);
         cd.setEmail(email_customer);
         cd.setPhone(telepon_customer);
+        ShippingAddress shippingAddress = new ShippingAddress();
+        shippingAddress.setAddress("");
+        shippingAddress.setCity("");
+        shippingAddress.setCountryCode("");
+        shippingAddress.setPostalCode("");
+        cd.setShippingAddress(shippingAddress);
         return cd;
     }
 
-    public static TransactionRequest transactionRequest(List<Pesanan> listPesanan, String id, double price, int qty, String name){
+    public static TransactionRequest transactionRequest(int persentase_potongan, List<Pesanan> listPesanan, String id, double price, int qty, String name){
         TransactionRequest request = new TransactionRequest(System.currentTimeMillis()+" ",price);
         request.setCustomerDetails(customerDetails());
 
         ArrayList<ItemDetails> itemDetails = new ArrayList<>();
         for(int i=0;i<listPesanan.size();i++){
-            ItemDetails details = new ItemDetails("Menu-"+listPesanan.get(i).getId_pesanan(),listPesanan.get(i).getHarga_menu(),
-                                                listPesanan.get(i).getJumlah_pesanan(),listPesanan.get(i).getNama_menu());
-            itemDetails.add(details);
+            if(persentase_potongan != 0){
+                double discount =  (persentase_potongan * listPesanan.get(i).getHarga_menu())/100;
+                double harga =  listPesanan.get(i).getHarga_menu() - discount;
+                ItemDetails details = new ItemDetails("Menu-"+listPesanan.get(i).getId_pesanan(), harga,
+                        listPesanan.get(i).getJumlah_pesanan(),listPesanan.get(i).getNama_menu());
+                itemDetails.add(details);
+            }else{
+                ItemDetails details = new ItemDetails("Menu-"+listPesanan.get(i).getId_pesanan(), listPesanan.get(i).getHarga_menu(),
+                        listPesanan.get(i).getJumlah_pesanan(),listPesanan.get(i).getNama_menu());
+                itemDetails.add(details);
+            }
         }
         request.setItemDetails(itemDetails);
         return request;
@@ -340,7 +366,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                 try {
                     shimmerFrameLayout.stopShimmer();
                     shimmerFrameLayout.setVisibility(View.GONE);
-                    if(id_kupon_diskon == 0){
+                    if(id_kupon_customer == 0){
                         btnChooseCoupon.setVisibility(View.VISIBLE);
                     }else{
                         btnChooseCoupon.setVisibility(View.GONE);
@@ -408,11 +434,153 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
         editor.commit();
     }
 
-    public void addDataTransactionSuccess(){
+    public void addDataTransactionSuccess(int id_customer, int id_kupon_customer, double total_harga, String metode_pembayaran, String status_transaksi, String nama_metode){
+        RequestQueue queue = Volley.newRequestQueue(this);
+
         loadingDialog.startLoadingDialog();
+        StringRequest stringRequest = new StringRequest(POST, TransactionApi.ROOT_ADD_TRANSACTION_CASH, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    loadingDialog.dismissDialog();
+                    JSONObject obj = new JSONObject(response);
+                    String status;
+                    status = obj.getString("OUT_STAT");
+                    if(status.equalsIgnoreCase("T")){
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                    }else{
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    }
+
+                } catch (JSONException e) {
+                    loadingDialog.dismissDialog();
+                    e.printStackTrace();
+                    FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
+                FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("id_customer", String.valueOf(id_customer));
+                params.put("id_karyawan", "1");
+                params.put("id_kupon_customer", String.valueOf(id_kupon_customer));
+                params.put("total_harga", String.valueOf(total_harga));
+                params.put("metode_pembayaran", metode_pembayaran);
+                params.put("status_transaksi", status_transaksi);
+                params.put("nama_metode", nama_metode);
+                params.put("device", "mobile");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
     }
 
-    public void addDataTransactionPending(){
+    public void addDataTransactionPending(int id_customer, int id_kupon_customer, double total_harga, String metode_pembayaran, String status_transaksi, String nama_metode, String va_or_link){
+        RequestQueue queue = Volley.newRequestQueue(this);
+
         loadingDialog.startLoadingDialog();
+        StringRequest stringRequest = new StringRequest(POST, TransactionApi.ROOT_ADD_TRANSACTION_CASH, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    loadingDialog.dismissDialog();
+                    JSONObject obj = new JSONObject(response);
+                    String status;
+                    status = obj.getString("OUT_STAT");
+                    if(status.equalsIgnoreCase("T")){
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                    }else{
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    }
+
+                } catch (JSONException e) {
+                    loadingDialog.dismissDialog();
+                    e.printStackTrace();
+                    FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
+                FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("id_customer", String.valueOf(id_customer));
+                params.put("id_karyawan", "1");
+                params.put("id_kupon_customer", String.valueOf(id_kupon_customer));
+                params.put("total_harga", String.valueOf(total_harga));
+                params.put("metode_pembayaran", metode_pembayaran);
+                params.put("status_transaksi", status_transaksi);
+                params.put("nama_metode", nama_metode);
+                params.put("va_number_or_link_payment", va_or_link);
+                params.put("device", "mobile");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public void addDataTransactionCash(int id_customer, int id_kupon_customer, double total_harga, String metode_pembayaran, String status_transaksi){
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        loadingDialog.startLoadingDialog();
+        StringRequest stringRequest = new StringRequest(POST, TransactionApi.ROOT_ADD_TRANSACTION_CASH, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    loadingDialog.dismissDialog();
+                    JSONObject obj = new JSONObject(response);
+                    String status;
+                    status = obj.getString("OUT_STAT");
+                    if(status.equalsIgnoreCase("T")){
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                    }else{
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    }
+
+                } catch (JSONException e) {
+                    loadingDialog.dismissDialog();
+                    e.printStackTrace();
+                    FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
+                FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("id_customer", String.valueOf(id_customer));
+                params.put("id_karyawan", "1");
+                params.put("id_kupon_customer", String.valueOf(id_kupon_customer));
+                params.put("total_harga", String.valueOf(total_harga));
+                params.put("metode_pembayaran", metode_pembayaran);
+                params.put("status_transaksi", status_transaksi);
+                params.put("device", "mobile");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
     }
 }

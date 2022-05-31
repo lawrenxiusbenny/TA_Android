@@ -99,7 +99,7 @@
                 android:id="@+id/searchViewMenu"
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="10dp"
                 android:iconifiedByDefault="false"
                 android:layout_marginTop="228dp"
                 android:background="@drawable/bg_search"
@@ -126,12 +126,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_recommend"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:paddingRight="20dp"
-                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/searchViewMenu"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/searchViewMenu"
@@ -153,10 +152,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_menu"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:paddingBottom="60dp"
+                android:layout_marginHorizontal="5dp"
                 app:layout_constraintEnd_toEndOf="@+id/searchViewMenu"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/searchViewMenu"

@@ -18,8 +18,8 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="350px"
-            android:layout_height="350px"
+            android:layout_width="140dp"
+            android:layout_height="130dp"
             android:orientation="vertical"
             android:background="@color/shimmer">
             <LinearLayout
@@ -65,7 +65,7 @@
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="100px"
+                    android:layout_height="50dp"
                     android:textSize="10dp"
                     android:textColor="@color/shimmer"
                     android:background="@color/shimmer"
