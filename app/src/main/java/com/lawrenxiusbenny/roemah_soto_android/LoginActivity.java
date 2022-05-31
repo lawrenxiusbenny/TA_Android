@@ -49,10 +49,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private String getEmail, getPassword;
 
-    private int id_customer;
+
     private SharedPreferences.Editor editor;
     private SharedPreferences sPreferences;
     public static final String KEY_ID = "id_customer";
+    public static final String KEY_NAMA_CUSTOMER = "nama_customer";
+    public static final String KEY_EMAIL_CUSTOMER = "email_customer";
+    public static final String KEY_TELEPON_CUSTOMER = "telepon_customer";
+    private int id_customer;
+    private String nama_customer="";
+    private String email_customer="";
+    private String telepon_customer="";
 
     final LoadingDialog loadingDialog = new LoadingDialog(LoginActivity.this);
 
@@ -182,8 +189,11 @@ public class LoginActivity extends AppCompatActivity {
                     status = obj.getString("OUT_STAT");
                     if(status.equalsIgnoreCase("T")){
                         id_customer = obj.getJSONObject("OUT_DATA").getInt("id_customer");
+                        nama_customer = obj.getJSONObject("OUT_DATA").getString("nama_customer");
+                        email_customer = obj.getJSONObject("OUT_DATA").getString("email_customer");
+                        telepon_customer = obj.getJSONObject("OUT_DATA").getString("telepon_customer");
                         FancyToast.makeText(LoginActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-                        getDataToPreference(id_customer);
+                        getDataToPreference(id_customer,nama_customer,email_customer,telepon_customer);
                         Intent i = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(i);
                         finish();
@@ -217,10 +227,13 @@ public class LoginActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    public void getDataToPreference(int id){
+    public void getDataToPreference(int id,String nama, String email, String telepon){
         sPreferences = this.getSharedPreferences("login", Context.MODE_PRIVATE);
         editor = sPreferences.edit();
         editor.putInt(KEY_ID,id);
+        editor.putString(KEY_NAMA_CUSTOMER,nama);
+        editor.putString(KEY_EMAIL_CUSTOMER,email);
+        editor.putString(KEY_TELEPON_CUSTOMER,telepon);
         editor.commit();
     }
 }

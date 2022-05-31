@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +21,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,7 +36,24 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.lawrenxiusbenny.roemah_soto_android.adapter.PesananRecyclerViewAdapter;
 import com.lawrenxiusbenny.roemah_soto_android.adapter.ShowPesananRecyclerViewAdapter;
 import com.lawrenxiusbenny.roemah_soto_android.api.PesananApi;
+import com.lawrenxiusbenny.roemah_soto_android.dialog.LoadingDialog;
+import com.lawrenxiusbenny.roemah_soto_android.model.Midtrans;
 import com.lawrenxiusbenny.roemah_soto_android.model.Pesanan;
+
+import com.midtrans.sdk.corekit.callback.TransactionCallback;
+import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback;
+import com.midtrans.sdk.corekit.core.MidtransSDK;
+import com.midtrans.sdk.corekit.core.PaymentMethod;
+import com.midtrans.sdk.corekit.core.TransactionRequest;
+import com.midtrans.sdk.corekit.core.themes.CustomColorTheme;
+import com.midtrans.sdk.corekit.models.CustomerDetails;
+import com.midtrans.sdk.corekit.models.ItemDetails;
+import com.midtrans.sdk.corekit.models.PaymentMethodsModel;
+import com.midtrans.sdk.corekit.models.ShippingAddress;
+import com.midtrans.sdk.corekit.models.TransactionResponse;
+import com.midtrans.sdk.corekit.models.snap.TransactionResult;
+import com.midtrans.sdk.uikit.SdkUIFlowBuilder;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,18 +67,21 @@ import java.util.Objects;
 
 import static com.android.volley.Request.Method.GET;
 
-public class CheckoutActivity extends AppCompatActivity {
+
+public class CheckoutActivity extends AppCompatActivity implements TransactionFinishedCallback {
 
     private RecyclerView recyclerView;
     private ShowPesananRecyclerViewAdapter adapter;
     private List<Pesanan> listPesanan;
 
-    private Button btnChooseCoupon;
+    private Button btnChooseCoupon, btnContinue;
 
     private Chip chipChosen;
     private ChipGroup chipGroupChosen;
 
     private TextView txtTotalHarga, txtTitleChosenCoupon;
+
+    final LoadingDialog loadingDialog = new LoadingDialog(CheckoutActivity.this);
 
     private AutoCompleteTextView exposedDropDownPayment;
     private String[] ddPayment = new String[] {"Cash","Cashless"};
@@ -69,11 +93,18 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private SharedPreferences sPreferences;
     public static final String KEY_ID = "id_customer";
+    public static final String KEY_NAMA_CUSTOMER = "nama_customer";
+    public static final String KEY_EMAIL_CUSTOMER = "email_customer";
+    public static final String KEY_TELEPON_CUSTOMER = "telepon_customer";
     public static final String KEY_ID_KUPON = "id_kupon_diskon";
     public static final String KEY_NAMA_KUPON = "nama_kupon";
     public static final String KEY_PERSENTASE_POTONGAN = "persentase_potongan";
+    public static final String KEY_PAYMENT = "va_number_or_link_payment";
     private SharedPreferences.Editor editor;
     private int id_customer = 0;
+    private static String nama_customer="";
+    private static String email_customer="";
+    private static String telepon_customer="";
     private int id_kupon_diskon = 0;
     private String nama_kupon = "";
     private int persentase_potongan = 0;
@@ -84,29 +115,14 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
-        //cek sudah login atau belum
-        sPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-        id_customer = sPreferences.getInt(KEY_ID,Context.MODE_PRIVATE);
-        id_kupon_diskon = sPreferences.getInt(KEY_ID_KUPON,Context.MODE_PRIVATE);
-        nama_kupon = sPreferences.getString(KEY_NAMA_KUPON,String.valueOf(MODE_PRIVATE));
-        persentase_potongan = sPreferences.getInt(KEY_PERSENTASE_POTONGAN,Context.MODE_PRIVATE);
-
-
-        btnChooseCoupon = findViewById(R.id.btnChooseCoupon);
-        txtTitleChosenCoupon = findViewById(R.id.txtTitleChosenCoupon);
-        chipChosen = findViewById(R.id.chipChosenCoupon);
-        chipGroupChosen = findViewById(R.id.chipGroupChosenCoupon);
-
-        txtTotalHarga = findViewById(R.id.totalHargaCheckout);
-
-        shimmerFrameLayout = findViewById(R.id.shimmer_layout_checkout);
-        layoutCheckout = findViewById(R.id.layoutViewCheckout);
-
-        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        getDataFromPreferences();
+        getViewFromId();
         setDropDown();
         loadPesanan();
+        initMidtransSdk();
 
-        btnBack = findViewById(R.id.btn_back_checkout);
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +130,40 @@ public class CheckoutActivity extends AppCompatActivity {
                 Intent i;
                 i = new Intent(view.getContext(),MainActivity.class);
                 startActivity(i);
+            }
+        });
+
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog;
+                dialog = new Dialog(view.getContext());
+                dialog.setContentView(R.layout.dialog_confirm_checkout);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+                Button btnCancel = dialog.findViewById(R.id.closeBtnCheckout);
+                Button btnContinue = dialog.findViewById(R.id.btnContinueDialog);
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btnContinue.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(payment.equalsIgnoreCase("Cashless")){
+                            MidtransSDK.getInstance().setTransactionRequest(transactionRequest(listPesanan,String.valueOf(id_customer),harga,1,"nama_customer"));
+                            MidtransSDK.getInstance().startPaymentUiFlow(view.getContext());
+                        }else{
+                            
+                        }
+                    }
+                });
+
+
             }
         });
 
@@ -142,6 +192,113 @@ public class CheckoutActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    public void getDataFromPreferences(){
+        sPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+        id_customer = sPreferences.getInt(KEY_ID,Context.MODE_PRIVATE);
+        nama_customer = sPreferences.getString(KEY_NAMA_CUSTOMER,String.valueOf(Context.MODE_PRIVATE));
+        email_customer = sPreferences.getString(KEY_EMAIL_CUSTOMER,String.valueOf(Context.MODE_PRIVATE));
+        telepon_customer = sPreferences.getString(KEY_TELEPON_CUSTOMER,String.valueOf(Context.MODE_PRIVATE));
+        id_kupon_diskon = sPreferences.getInt(KEY_ID_KUPON,Context.MODE_PRIVATE);
+        nama_kupon = sPreferences.getString(KEY_NAMA_KUPON,String.valueOf(MODE_PRIVATE));
+        persentase_potongan = sPreferences.getInt(KEY_PERSENTASE_POTONGAN,Context.MODE_PRIVATE);
+    }
+
+    public void getViewFromId(){
+        btnContinue = findViewById(R.id.btnContinue);
+        btnChooseCoupon = findViewById(R.id.btnChooseCoupon);
+        btnBack = findViewById(R.id.btn_back_checkout);
+        txtTitleChosenCoupon = findViewById(R.id.txtTitleChosenCoupon);
+        txtTotalHarga = findViewById(R.id.totalHargaCheckout);
+        chipChosen = findViewById(R.id.chipChosenCoupon);
+        chipGroupChosen = findViewById(R.id.chipGroupChosenCoupon);
+        shimmerFrameLayout = findViewById(R.id.shimmer_layout_checkout);
+        layoutCheckout = findViewById(R.id.layoutViewCheckout);
+    }
+
+    public void initMidtransSdk(){
+        SdkUIFlowBuilder.init()
+                .setContext(this)
+                .setMerchantBaseUrl(BuildConfig.BASE_URL)
+                .setClientKey(BuildConfig.CLIENT_KEY)
+                .setTransactionFinishedCallback(this)
+                .enableLog(true)
+                .setColorTheme(new CustomColorTheme("#FFE51255","#B61548","#FFE51255"))
+                .buildSDK();
+    }
+
+    @Override
+    public void onTransactionFinished(TransactionResult result) {
+        if(result.getResponse() != null){
+            switch (result.getStatus()){
+                case TransactionResult.STATUS_SUCCESS:
+//                    FancyToast.makeText(CheckoutActivity.this, "Transaction Finished",FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                    addDataTransactionSuccess();
+                    break;
+                case TransactionResult.STATUS_PENDING:
+//                    FancyToast.makeText(CheckoutActivity.this, "Transaction Pending, more info in your transaction history",FancyToast.LENGTH_SHORT, FancyToast.INFO, false).show();
+                    String va_number_or_link_payment = "";
+                    if(result.getResponse().getPaymentType().equalsIgnoreCase("bank_transfer")){
+                        if(result.getResponse().getBcaVaNumber() != null){
+                            va_number_or_link_payment = result.getResponse().getBcaVaNumber();
+                        }else if(result.getResponse().getBniVaNumber() != null){
+                            va_number_or_link_payment = result.getResponse().getBniVaNumber();
+                        }else if(result.getResponse().getBriVaNumber() != null){
+                            va_number_or_link_payment = result.getResponse().getBriVaNumber();
+                        }else if(result.getResponse().getPermataVANumber() != null){
+                            va_number_or_link_payment = result.getResponse().getPermataVANumber();
+                        }
+                    } else if(result.getResponse().getPaymentType().equalsIgnoreCase("gopay")){
+                        va_number_or_link_payment = result.getResponse().getDeeplinkUrl();
+                    }else if(result.getResponse().getPaymentType().equalsIgnoreCase("shopeepay")){
+                        va_number_or_link_payment = result.getResponse().getDeeplinkUrl();
+                    }
+                    paymentPendingHandle(va_number_or_link_payment);
+                    addDataTransactionPending();
+                    break;
+                case TransactionResult.STATUS_FAILED:
+                    FancyToast.makeText(CheckoutActivity.this, "Transaction Failed",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    break;
+            }
+            result.getResponse().getValidationMessages();
+        }else if(result.isTransactionCanceled()){
+            FancyToast.makeText(CheckoutActivity.this, "Transaction Canceled",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+        }else{
+            if(result.getStatus().equalsIgnoreCase(TransactionResult.STATUS_INVALID)){
+                FancyToast.makeText(CheckoutActivity.this, "Transaction Invalid",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+            }else{
+                FancyToast.makeText(CheckoutActivity.this, "Transaction Finished with failure",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+            }
+        }
+    }
+
+    public void paymentPendingHandle(String va_number_or_link_payment){
+        editor = sPreferences.edit();
+        editor.putString(KEY_PAYMENT,va_number_or_link_payment);
+        editor.commit();
+    }
+
+    public static CustomerDetails customerDetails(){
+        CustomerDetails cd = new CustomerDetails();
+        cd.setFirstName(nama_customer);
+        cd.setEmail(email_customer);
+        cd.setPhone(telepon_customer);
+        return cd;
+    }
+
+    public static TransactionRequest transactionRequest(List<Pesanan> listPesanan, String id, double price, int qty, String name){
+        TransactionRequest request = new TransactionRequest(System.currentTimeMillis()+" ",price);
+        request.setCustomerDetails(customerDetails());
+
+        ArrayList<ItemDetails> itemDetails = new ArrayList<>();
+        for(int i=0;i<listPesanan.size();i++){
+            ItemDetails details = new ItemDetails("Menu-"+listPesanan.get(i).getId_pesanan(),listPesanan.get(i).getHarga_menu(),
+                                                listPesanan.get(i).getJumlah_pesanan(),listPesanan.get(i).getNama_menu());
+            itemDetails.add(details);
+        }
+        request.setItemDetails(itemDetails);
+        return request;
     }
 
     public void setDropDown(){
@@ -249,5 +406,13 @@ public class CheckoutActivity extends AppCompatActivity {
         editor.putString(KEY_NAMA_KUPON,"");
         editor.putInt(KEY_PERSENTASE_POTONGAN,0);
         editor.commit();
+    }
+
+    public void addDataTransactionSuccess(){
+        loadingDialog.startLoadingDialog();
+    }
+
+    public void addDataTransactionPending(){
+        loadingDialog.startLoadingDialog();
     }
 }

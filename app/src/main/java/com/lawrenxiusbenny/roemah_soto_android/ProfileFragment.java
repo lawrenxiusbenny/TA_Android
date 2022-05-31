@@ -72,9 +72,17 @@ public class ProfileFragment extends Fragment {
 
     private SharedPreferences sPreferences;
     private SharedPreferences.Editor editor;
-    public static final String KEY_ID = "id_customer";
     public static final String KEY_POINT = "jumlah_point";
     public static final String KEY_TRANSAKSI = "id_transaksi";
+    public static final String KEY_ID = "id_customer";
+    public static final String KEY_NAMA_CUSTOMER = "nama_customer";
+    public static final String KEY_EMAIL_CUSTOMER = "email_customer";
+    public static final String KEY_TELEPON_CUSTOMER = "telepon_customer";
+
+    public static final String KEY_ID_KUPON = "id_kupon_diskon";
+    public static final String KEY_NAMA_KUPON = "nama_kupon";
+    public static final String KEY_PERSENTASE_POTONGAN = "persentase_potongan";
+    public static final String KEY_PAYMENT = "va_number_or_link_payment";
     int id_customer=0;
 
     @Override
@@ -423,6 +431,14 @@ public class ProfileFragment extends Fragment {
                         editor.putInt(KEY_ID,0);
                         editor.putInt(KEY_POINT,0);
                         editor.putString(KEY_TRANSAKSI,"");
+                        editor.putInt(KEY_ID_KUPON,0);
+                        editor.putString(KEY_NAMA_KUPON,"");
+                        editor.putInt(KEY_PERSENTASE_POTONGAN,0);
+                        editor.putString(KEY_PAYMENT,"");
+                        editor.putString(KEY_NAMA_CUSTOMER,"");
+                        editor.putString(KEY_EMAIL_CUSTOMER,"");
+                        editor.putString(KEY_TELEPON_CUSTOMER,"");
+                        editor.commit();
                         editor.commit();
 
                         new Handler().postDelayed(new Runnable() {
