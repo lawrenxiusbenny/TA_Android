@@ -19,8 +19,8 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="350px"
-            android:layout_height="350px"
+            android:layout_width="140dp"
+            android:layout_height="130dp"
             android:orientation="vertical"
             android:background="@color/white_001">
             <LinearLayout
@@ -65,25 +65,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/txtDeskripsiList"
-                    android:layout_width="400px"
-                    android:layout_height="120px"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="70"
                     android:textSize="10dp"
                     android:textColor="@color/green_002"
                     android:layout_marginBottom="5dp"
                     android:text="@string/deskripsi_kupon" />
                 <Button
                     android:id="@+id/btnClaimCouponList"
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="20px"
+                    android:layout_width="0dp"
                     android:layout_height="35dp"
+                    android:layout_weight="30"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/green_002"
                     android:textColor="@color/white"
-                    android:textSize="6dp"
+                    android:textSize="5dp"
                     android:text="@string/btn_claim"/>
 
             </LinearLayout>
@@ -104,7 +106,7 @@
                     android:textColor="@color/green_002"
                     android:text="@string/jumlah_point_title"/>
                 <TextView
-                    android:layout_width="50px"
+                    android:layout_width="10dp"
                     android:layout_height="wrap_content"
                     android:textSize="10dp"
                     android:textAlignment="center"

@@ -19,8 +19,8 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="450px"
-            android:layout_height="320px"
+            android:layout_width="150dp"
+            android:layout_height="110dp"
             android:orientation="vertical"
             android:background="@color/white_001">
             <LinearLayout
@@ -81,25 +81,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
                 <TextView
-                    android:layout_width="250px"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="50"
                     android:textSize="10dp"
                     android:textColor="@color/green_002"
                     android:layout_marginBottom="5dp"
                     android:text="@string/title_metode" />
                 <TextView
-                    android:layout_width="25px"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="5"
                     android:textSize="10dp"
                     android:textColor="@color/green_002"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/titik_dua" />
+                    android:text="@string/titik_dua"
+                    android:textAlignment="center"/>
                 <TextView
                     android:id="@+id/txtMetodePembayaranTransaksi"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="45"
                     android:textSize="10dp"
                     android:textColor="@color/green_002"
                     android:layout_marginBottom="5dp"
@@ -108,25 +113,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100">
                 <TextView
-                    android:layout_width="250px"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="50"
                     android:textSize="10dp"
                     android:textColor="@color/green_002"
                     android:layout_marginBottom="5dp"
                     android:text="@string/title_total" />
                 <TextView
-                    android:layout_width="25px"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="5"
                     android:textSize="10dp"
                     android:textColor="@color/green_002"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/titik_dua" />
+                    android:text="@string/titik_dua"
+                    android:textAlignment="center"/>
                 <TextView
                     android:id="@+id/txtTotalTransaksi"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="45"
                     android:textSize="10dp"
                     android:textColor="@color/green_002"
                     android:layout_marginBottom="5dp"
@@ -149,7 +159,7 @@
                     android:textColor="@color/green_002"
                     android:text="@string/title_tanggal_transaksi"/>
                 <TextView
-                    android:layout_width="50px"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
                     android:textSize="10dp"
                     android:textColor="@color/green_002"

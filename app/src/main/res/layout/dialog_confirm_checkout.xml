@@ -44,7 +44,7 @@
 
             <TextView
                 android:id="@+id/textIsiCheckout"
-                android:layout_width="800px"
+                android:layout_width="320dp"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
