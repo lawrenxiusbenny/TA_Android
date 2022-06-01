@@ -9,12 +9,13 @@ public class Transaction {
     public String metode_pembayaran;
     public String nama_metode;
     public String status_transaksi;
+    public String va_number_or_link_payment;
     public String created_at;
 
     public int queue;
 
 
-    public Transaction(String id_transaksi, int id_customer, int id_karyawan, int id_kupon_customer, double total_harga, String metode_pembayaran, String nama_metode, String status_transaksi, String created_at, int queue) {
+    public Transaction(String id_transaksi, int id_customer, int id_karyawan, int id_kupon_customer, double total_harga, String metode_pembayaran, String nama_metode, String status_transaksi, String va_number_or_link_payment, String created_at, int queue) {
         this.id_transaksi = id_transaksi;
         this.id_customer = id_customer;
         this.id_karyawan = id_karyawan;
@@ -23,6 +24,7 @@ public class Transaction {
         this.metode_pembayaran = metode_pembayaran;
         this.nama_metode = nama_metode;
         this.status_transaksi = status_transaksi;
+        this.va_number_or_link_payment = va_number_or_link_payment;
         this.created_at = created_at;
         this.queue = queue;
     }
@@ -36,6 +38,14 @@ public class Transaction {
     }
 
     public Transaction() {
+    }
+
+    public String getVa_number_or_link_payment() {
+        return va_number_or_link_payment;
+    }
+
+    public void setVa_number_or_link_payment(String va_number_or_link_payment) {
+        this.va_number_or_link_payment = va_number_or_link_payment;
     }
 
     public String getId_transaksi() {

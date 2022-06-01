@@ -146,10 +146,11 @@ public class HistoryFragment extends Fragment {
                         String metode_pembayaran    = jsonObject.optString("metode_pembayaran");
                         String nama_metode    = jsonObject.optString("nama_metode");
                         String status_transaksi    = jsonObject.optString("status_transaksi");
+                        String va_number_or_link_payment = jsonObject.optString("va_number_or_link_payment");
                         String created_at    = jsonObject.optString("created_at");
 
                         Transaction transaction = new Transaction(id_transaksi,id_customer,id_karyawan,id_kupon_customer,
-                                total_harga,metode_pembayaran,nama_metode,status_transaksi,created_at,queue);
+                                total_harga,metode_pembayaran,nama_metode,status_transaksi,va_number_or_link_payment,created_at,queue);
                         listHistory.add(transaction);
                         queue++;
                     }

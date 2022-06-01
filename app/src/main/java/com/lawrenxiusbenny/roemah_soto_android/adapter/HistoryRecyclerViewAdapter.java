@@ -106,7 +106,9 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         holder.txtMetode.setText(transaction.getMetode_pembayaran());
         holder.txtTotal.setText("IDR "+ formatter.format(transaction.getTotal_harga()));
         holder.txtTanggal.setText(transaction.getCreated_at());
-
+        if(transaction.getStatus_transaksi().equalsIgnoreCase("Belum Lunas")){
+            holder.txtBelumBayar.setVisibility(View.VISIBLE);
+        }
         holder.mParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +131,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtTitle, txtId, txtMetode, txtTotal, txtTanggal;
+        private TextView txtTitle, txtId, txtMetode, txtTotal, txtTanggal, txtBelumBayar;
         private CardView mParent;
 
         public HistoryViewHolder(@NonNull View itemView) {
@@ -140,6 +142,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
             txtMetode = itemView.findViewById(R.id.txtMetodePembayaranTransaksi);
             txtTotal = itemView.findViewById(R.id.txtTotalTransaksi);
             txtTanggal = itemView.findViewById(R.id.txtTanggalTransaksi);
+            txtBelumBayar = itemView.findViewById(R.id.titleBelumBayar);
         }
     }
 

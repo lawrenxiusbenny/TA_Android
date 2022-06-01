@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.amar.library.ui.StickyScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewMenu"
+    android:background="@color/white_001"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:stickyHeader="@id/titleTampilPesanan">
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/white_001"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
             <ImageButton
@@ -68,19 +78,221 @@
     </com.facebook.shimmer.ShimmerFrameLayout>
     <ScrollView
         android:id="@+id/scrollViewTampilPesanan"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:visibility="gone"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/closeBtnKosong"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTampilPesanan">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_tampil_pesanan"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/txtBelumBayarCashLess"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:padding="10dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/green_001"
+                android:background="@drawable/bg_btn"
+                android:backgroundTint="@color/green_002"
+                android:text="@string/title_not_pay_yet_show_pesanan"/>
+            <TextView
+                android:id="@+id/txtBelumBayarCash"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:padding="10dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/green_001"
+                android:background="@drawable/bg_btn"
+                android:backgroundTint="@color/green_002"
+                android:text="@string/title_not_pay_yet_cash_show_pesanan"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginVertical="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_informasi_transaksi"
+                    android:textColor="@color/green_002"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:textStyle="bold"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:orientation="horizontal">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/green_002"
+                        app:hintTextColor="@color/green_002"
+                        android:enabled="false"
+                        android:hint="@string/title_id_transaksi"
+                        app:startIconDrawable="@drawable/ic_baseline_payment_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtInputIdTransaksiShowPesanan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_id_transaksi"
+                            android:textCursorDrawable="@null"
+                            android:textSize="8pt"
+                            android:enabled="false" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/green_002"
+                        app:hintTextColor="@color/green_002"
+                        android:enabled="false"
+                        android:hint="@string/title_metode_pembayaran"
+                        app:startIconDrawable="@drawable/ic_baseline_payment_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtInputMetodePembayaranShowPesanan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_metode_pembayaran"
+                            android:textCursorDrawable="@null"
+                            android:textSize="8pt"
+                            android:enabled="false" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/green_002"
+                        app:hintTextColor="@color/green_002"
+                        android:enabled="false"
+                        android:hint="@string/title_nama_metode"
+                        app:startIconDrawable="@drawable/ic_baseline_payment_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtInputNamaMetodeShowPesanan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_nama_metode"
+                            android:textCursorDrawable="@null"
+                            android:textSize="8pt"
+                            android:enabled="false" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/green_002"
+                        app:hintTextColor="@color/green_002"
+                        android:enabled="false"
+                        android:hint="@string/title_nama_status_transaksi"
+                        app:startIconDrawable="@drawable/ic_baseline_payment_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtInputStatusTransaksiShowPesanan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_nama_status_transaksi"
+                            android:textCursorDrawable="@null"
+                            android:textSize="8pt"
+                            android:enabled="false" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_virtual_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:paddingVertical="10dp"
+                        android:text="@string/title_va_or_link"/>
+                    <TextView
+                        android:id="@+id/txtVaOrLink"
+                        android:textIsSelectable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:padding="10dp"
+                        android:text="@string/va_or_link_payment"
+                        android:textSize="16sp"
+                        android:textColor="@color/green_002"
+                        android:background="@drawable/bg_btn"
+                        android:backgroundTint="@color/green_001"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_informasi_order"
+                android:textColor="@color/green_002"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textStyle="bold"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_tampil_pesanan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</com.amar.library.ui.StickyScrollView>

@@ -27,7 +27,7 @@
     <string name="title_edit_date">Edit Date Of Birth</string>
     <string name="title_edit_pass">Edit Password</string>
     <string name="title_history">Transaction History</string>
-    <string name="title_order_history">Order History</string>
+    <string name="title_order_history">Riwayat Transaksi</string>
     <string name="title_coupon">Coupon Discount</string>
     <string name="title_coupon_customer">My Coupon</string>
     <string name="title_coupon_list">Coupon List</string>
@@ -145,6 +145,19 @@
     <!--  dialog Checkout  -->
     <string name="checkout_title">Confirmation Checkout</string>
     <string name="checkout_body">Are you sure want to checkout your order? once you click continue, you can not go back again</string>
+
+    <!-- menunggu pembayaran -->
+    <string name="title_not_pay_yet">Menunggu pembayaran, klik untuk melihat detail...</string>
+    <string name="title_not_pay_yet_show_pesanan">Pembayaran masih belum dilakukan, silahkan melanjutan pembayaran dengan Nomor Virtual Account atau Link Pembayaran dibawah. Jika sudah melakukan pembayaran, silahkan hubungi penjual.</string>
+    <string name="title_not_pay_yet_cash_show_pesanan">Pembayaran masih belum dilakukan, silahkan melakukan pembayaran secara cash di bagian cashier</string>
+    <string name="va_or_link_payment">655583838334444</string>
+    <string name="title_informasi_transaksi">Informasi Transaksi</string>
+    <string name="title_informasi_order">Informasi Pesanan</string>
+    <string name="title_id_transaksi">ID Transaksi</string>
+    <string name="title_metode_pembayaran">Metode Pembayaran</string>
+    <string name="title_nama_metode">Nama Metode</string>
+    <string name="title_nama_status_transaksi">Status Transaksi</string>
+    <string name="title_va_or_link">Virtual Account atau Link Pembayaran</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
