@@ -110,33 +110,41 @@ public class MyCouponFragment extends Fragment {
                     shimmerFrameLayout.setVisibility(View.GONE);
                     shimmerFrameLayout.stopShimmer();
 
-                    JSONArray jsonArray = response.getJSONArray("OUT_DATA");
+                    if(response.getString("OUT_STAT").equalsIgnoreCase("T")){
+                        JSONArray jsonArray = response.getJSONArray("OUT_DATA");
 
-                    if(jsonArray.length()!=0){
-                        layoutRecycler.setVisibility(View.VISIBLE);
+                        if(jsonArray.length()!=0){
+                            layoutRecycler.setVisibility(View.VISIBLE);
+                            layoutKosong.setVisibility(View.GONE);
+                        }else{
+                            layoutRecycler.setVisibility(View.GONE);
+                            layoutKosong.setVisibility(View.VISIBLE);
+                        }
+
+                        if(!listCoupon.isEmpty())
+                            listCoupon.clear();
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+
+                            String created_at          = jsonObject.optString("created_at");
+                            int id_kupon_diskon           = jsonObject.optInt("id_kupon_diskon");
+                            int id_kupon_customer           = jsonObject.optInt("id_kupon_customer");
+                            String nama_kupon           = jsonObject.optString("nama_kupon");
+                            int persentase_potongan     = jsonObject.optInt("persentase_potongan");
+                            int jumlah_point_tukar      = jsonObject.optInt("jumlah_point_tukar");
+                            String deskripsi_kupon      = jsonObject.optString("deskripsi_kupon");
+
+                            Coupon coupon = new Coupon(id_kupon_customer,id_customer,id_kupon_diskon,nama_kupon,persentase_potongan,
+                                    jumlah_point_tukar,deskripsi_kupon,created_at);
+                            listCoupon.add(coupon);
+                        }
+                        adapter.notifyDataSetChanged();
+                        layoutRecycler.setRefreshing(false);
                     }else{
                         layoutKosong.setVisibility(View.VISIBLE);
+                        layoutRecycler.setVisibility(View.GONE);
                     }
-                    if(!listCoupon.isEmpty())
-                        listCoupon.clear();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-
-                        String created_at          = jsonObject.optString("created_at");
-                        int id_kupon_diskon           = jsonObject.optInt("id_kupon_diskon");
-                        int id_kupon_customer           = jsonObject.optInt("id_kupon_customer");
-                        String nama_kupon           = jsonObject.optString("nama_kupon");
-                        int persentase_potongan     = jsonObject.optInt("persentase_potongan");
-                        int jumlah_point_tukar      = jsonObject.optInt("jumlah_point_tukar");
-                        String deskripsi_kupon      = jsonObject.optString("deskripsi_kupon");
-
-                        Coupon coupon = new Coupon(id_kupon_customer,id_customer,id_kupon_diskon,nama_kupon,persentase_potongan,
-                                jumlah_point_tukar,deskripsi_kupon,created_at);
-                        listCoupon.add(coupon);
-                    }
-                    adapter.notifyDataSetChanged();
-                    layoutRecycler.setRefreshing(false);
                 }catch (JSONException e){
                     e.printStackTrace();
                 }

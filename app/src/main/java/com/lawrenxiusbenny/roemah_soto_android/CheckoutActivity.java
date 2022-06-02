@@ -270,17 +270,17 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     startActivity(i);
                     break;
                 case TransactionResult.STATUS_FAILED:
-                    FancyToast.makeText(CheckoutActivity.this, "Transaction Failed",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(CheckoutActivity.this, "Transaction Failed",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                     break;
             }
             result.getResponse().getValidationMessages();
         }else if(result.isTransactionCanceled()){
-            FancyToast.makeText(CheckoutActivity.this, "Transaction Canceled",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+            FancyToast.makeText(CheckoutActivity.this, "Transaction Canceled",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
         }else{
             if(result.getStatus().equalsIgnoreCase(TransactionResult.STATUS_INVALID)){
-                FancyToast.makeText(CheckoutActivity.this, "Transaction Invalid",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(CheckoutActivity.this, "Transaction Invalid",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
             }else{
-                FancyToast.makeText(CheckoutActivity.this, "Transaction Finished with failure",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(CheckoutActivity.this, "Transaction Finished with failure",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
             }
         }
     }
@@ -447,22 +447,22 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     String status;
                     status = obj.getString("OUT_STAT");
                     if(status.equalsIgnoreCase("T")){
-                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
                     }else{
-                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                     }
 
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(CheckoutActivity.this, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismissDialog();
-                FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(CheckoutActivity.this, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                 error.printStackTrace();
             }
         }){
@@ -497,22 +497,22 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     String status;
                     status = obj.getString("OUT_STAT");
                     if(status.equalsIgnoreCase("T")){
-                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
                     }else{
-                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                     }
 
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(CheckoutActivity.this, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismissDialog();
-                FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(CheckoutActivity.this, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                 error.printStackTrace();
             }
         }){
@@ -548,22 +548,22 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     String status;
                     status = obj.getString("OUT_STAT");
                     if(status.equalsIgnoreCase("T")){
-                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
                     }else{
-                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                        FancyToast.makeText(CheckoutActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                     }
 
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(CheckoutActivity.this, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismissDialog();
-                FancyToast.makeText(CheckoutActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(CheckoutActivity.this, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                 error.printStackTrace();
             }
         }){

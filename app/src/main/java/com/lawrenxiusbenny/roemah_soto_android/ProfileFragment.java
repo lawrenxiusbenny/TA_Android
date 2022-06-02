@@ -489,7 +489,7 @@ public class ProfileFragment extends Fragment {
         String getName = txtEdit.getText().toString();
 
         if(getName.equalsIgnoreCase("")){
-            twEdit.setError("Full name should not be empty");
+            twEdit.setError("Nama lengkap tidak boleh kosong");
         }else{
             saveName(dialog,txtEdit.getText().toString());
             Fragment fragment = new ProfileFragment();
@@ -501,7 +501,7 @@ public class ProfileFragment extends Fragment {
         String getPhone = txtEdit.getText().toString();
 
         if(getPhone.length()<11 || getPhone.length()>13){
-            twEdit.setError("Phone number should be between 11-13 characters");
+            twEdit.setError("Nomor HP harus 11-13 karakter");
         }else{
             savePhone(dialog,txtEdit.getText().toString());
             Fragment fragment = new ProfileFragment();
@@ -513,7 +513,7 @@ public class ProfileFragment extends Fragment {
         String getDate = txtEdit.getText().toString();
 
         if(getDate.isEmpty()){
-            twEdit.setError("Birth of Date should not be empty");
+            twEdit.setError("Tanggal lahir tidak boleh kosong");
         }else{
             saveDate(dialog,txtEdit.getText().toString());
             Fragment fragment = new ProfileFragment();
@@ -532,27 +532,27 @@ public class ProfileFragment extends Fragment {
         cekConf = false;
 
         if(getOld.isEmpty()){
-            twOld.setError("Old password should not be empty");
+            twOld.setError("Password lama tidak boleh kosong");
         }else if(getOld.length()<6){
-            twOld.setError("Old password should be at least 6 characters");
+            twOld.setError("Password lama harus minimal 6 karakter");
         }else{
             cekOld = true;
         }
 
         if(getNew.isEmpty()){
-            twNew.setError("New password should not be empty");
+            twNew.setError("Password bari tidak boleh kosong");
         }else if(getNew.length()<6){
-            twNew.setError("New password should be at least 6 characters");
+            twNew.setError("Password baru harus minimal 6 karakter");
         }else{
             cekNew = true;
         }
 
         if(getConf.isEmpty()){
-            twConf.setError("Confirmation password should not be empty");
+            twConf.setError("Konfirmasi password tidak boleh kosong");
         }else if(getConf.length()<6){
-            twConf.setError("Confirmation password should be at least 6 characters");
+            twConf.setError("Konfirmasi password harus minimal 6 karakter");
         }else if(!getConf.equalsIgnoreCase(getNew)){
-            twConf.setError("Confirmation password should be same with new password");
+            twConf.setError("Konfirmasi password harus sama dengan password baru");
         }else{
             cekConf = true;
         }
@@ -648,14 +648,14 @@ public class ProfileFragment extends Fragment {
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(getContext(), "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismissDialog();
-                FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(getContext(), "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
             }
         }) {
             @Override
@@ -684,14 +684,14 @@ public class ProfileFragment extends Fragment {
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(getContext(), "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismissDialog();
-                FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(getContext(), "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
             }
         }) {
             @Override
@@ -720,14 +720,14 @@ public class ProfileFragment extends Fragment {
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(getContext(), "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismissDialog();
-                FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(getContext(), "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
             }
         }) {
             @Override
@@ -763,14 +763,14 @@ public class ProfileFragment extends Fragment {
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(getContext(), "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismissDialog();
-                FancyToast.makeText(getContext(), "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(getContext(), "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
             }
         }) {
             @Override

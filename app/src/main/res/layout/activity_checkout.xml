@@ -124,7 +124,7 @@
 
             <TextView
                 android:id="@+id/txtTitleChosenCoupon"
-                android:layout_width="150dp"
+                android:layout_width="135dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"
@@ -226,7 +226,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="135dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="15dp"

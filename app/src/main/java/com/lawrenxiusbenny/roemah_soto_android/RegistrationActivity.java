@@ -217,35 +217,35 @@ public class RegistrationActivity extends AppCompatActivity {
         getPassword = txtInputPassword.getText().toString();
 
         if(getName.isEmpty()){
-            twName.setError("Full name should not be empty");
+            twName.setError("Nama lengkap tidak boleh kosong");
         }else{
             cekName = true;
         }
 
         if(getPhone.length()<11 || getPhone.length()>13){
-            twPhone.setError("Phone number should be between 11-13 characters");
+            twPhone.setError("Nomor HP harus 11-13 karakter");
         }else{
             cekPhone = true;
         }
 
         if(getDate.isEmpty()){
-            twDate.setError("Birth of Date should not be empty");
+            twDate.setError("Tanggal lahir tidak boleh kosong");
         }else {
             cekDate = true;
         }
 
         if(getEmail.isEmpty()){
-            twEmail.setError("Email should not be empty");
+            twEmail.setError("Email tidak boleh kosong");
         }else if(!Patterns.EMAIL_ADDRESS.matcher(getEmail).matches()){
-            twEmail.setError("Invalid Email");
+            twEmail.setError("Email Invalid");
         }else{
             cekEmail = true;
         }
 
         if(getPassword.isEmpty()){
-            twPassword.setError("Password should not be empty");
+            twPassword.setError("Password tidak boleh kosong");
         }else if(getPassword.length()<6){
-            twPassword.setError("Password should be at least 6 characters");
+            twPassword.setError("Password harus minimal 6 karakter");
         }else{
             cekPassword = true;
         }
@@ -270,24 +270,24 @@ public class RegistrationActivity extends AppCompatActivity {
                     status = obj.getString("OUT_STAT");
 
                     if(status.equalsIgnoreCase("T")){
-                        FancyToast.makeText(RegistrationActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        FancyToast.makeText(RegistrationActivity.this, "Pendaftaran berhasil",FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                         Intent i = new Intent(RegistrationActivity.this,LoginActivity.class);
                         startActivity(i);
                         finish();
                     }else{
-                        FancyToast.makeText(RegistrationActivity.this, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                        FancyToast.makeText(RegistrationActivity.this, "Pendaftaran gagal",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                     }
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(RegistrationActivity.this, "Network unstable, please try again1",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(RegistrationActivity.this, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismissDialog();
-                FancyToast.makeText(RegistrationActivity.this, "Email has been used, please try another",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(RegistrationActivity.this, "Email telah digunakan, silahkan coba yang lain",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 error.printStackTrace();
             }
         }){

@@ -1,150 +1,152 @@
 <resources>
     <string name="app_name">Roemah Soto</string>
 
-    <string name="login_welcome">Welcome</string>
-    <string name="login_2">Sign in to order</string>
+    <string name="login_welcome">Selamat Datang</string>
+    <string name="login_2">Masuk untuk Pesan</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="old_password">Old Password</string>
-    <string name="new_password">New Password</string>
-    <string name="confirmation_password">Confirmation Password</string>
-    <string name="full_name">Full Name</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="date_of_birth">Date Of Birth</string>
+    <string name="old_password">Password Lama</string>
+    <string name="new_password">Password baru</string>
+    <string name="confirmation_password">Konfirmasi Password</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="phone_number">Nomor HP</string>
+    <string name="date_of_birth">Tanggal Lahir</string>
     <string name="royalty">Royalty Point</string>
 
-    <string name="claim_coupon">claim coupon</string>
+    <string name="claim_coupon">klaim kupon</string>
 
-    <string name="login_to_registration">Do not have an account?</string>
+    <string name="login_to_registration">Belum punya akun?</string>
 
     <!--    title     -->
-    <string name="sign_up_title">Sign Up</string>
-    <string name="cart_title">Order Summary</string>
-    <string name="profile_title">Profile</string>
-    <string name="title_edit_name">Edit Full Name</string>
-    <string name="title_edit_phone">Edit Phone Number</string>
-    <string name="title_edit_date">Edit Date Of Birth</string>
-    <string name="title_edit_pass">Edit Password</string>
-    <string name="title_history">Transaction History</string>
+    <string name="sign_up_title">Daftar</string>
+    <string name="cart_title">Ringkasan Pesanan</string>
+    <string name="profile_title">Profil</string>
+    <string name="title_edit_name">Ubah Nama Lengkap</string>
+    <string name="title_edit_phone">Ubah Nomor HP</string>
+    <string name="title_edit_date">Ubah Tanggal Lahir</string>
+    <string name="title_edit_pass">Ubah Password</string>
+    <string name="title_history">Riwayat Transaksi</string>
     <string name="title_order_history">Riwayat Transaksi</string>
-    <string name="title_coupon">Coupon Discount</string>
-    <string name="title_coupon_customer">My Coupon</string>
-    <string name="title_coupon_list">Coupon List</string>
+    <string name="title_coupon">Kupon Diskon</string>
+    <string name="title_coupon_customer">Kupon Saya</string>
+    <string name="title_coupon_list">Daftar Kupon</string>
     <string name="title_checkout">Checkout</string>
-    <string name="title_choose_payment">Choose payment</string>
-    <string name="title_choose_coupon">Choose your coupon</string>
+    <string name="title_choose_payment">Pembayaran</string>
+    <string name="title_choose_coupon">Pilih kuponmu</string>
 
     <!--Coupon discount-->
-    <string name="my_coupon">My Coupon</string>
-    <string name="coupon_list">Coupon List</string>
+    <string name="my_coupon">Kupon Saya</string>
+    <string name="coupon_list">Daftar Kupon</string>
     <string name="persentase_potongan">15%</string>
     <string name="nama_kupon">Nama kupon diskon</string>
     <string name="deskripsi_kupon">Deskripsi kupon</string>
     <string name="tanggal_claim">claim at 2022-04-02</string>
     <string name="jumlah_point_title">Jumlah point tukar</string>
     <string name="jumlah_point">20 point</string>
-    <string name="nama_chosen_kupon">15% off | Coupon Name</string>
+    <string name="nama_chosen_kupon">15% off | Nama Kupon</string>
 
 
     <!--button-->
-    <string name="btn_login">Login</string>
-    <string name="btn_sign_up">Sign Up</string>
-    <string name="sign_up">Sign up!</string>
-    <string name="home">Home</string>
+    <string name="btn_login">Masuk</string>
+    <string name="btn_sign_up">Daftar</string>
+    <string name="sign_up">Daftar sekarang!</string>
+    <string name="home">Beranda</string>
     <string name="checkout">CHECKOUT</string>
-    <string name="close">Close</string>
-    <string name="add">Add</string>
-    <string name="logout">Logout</string>
-    <string name="go_to_login">Go to login</string>
-    <string name="cancel">Cancel</string>
-    <string name="save">Save</string>
-    <string name="btn_claim">claim</string>
-    <string name="btn_choose_coupon">Choose coupon discount</string>
-    <string name="btn_continue">continue</string>
+    <string name="close">Tutup</string>
+    <string name="add">Tambah</string>
+    <string name="logout">Keluar</string>
+    <string name="go_to_login">Masuk sekarang</string>
+    <string name="cancel">Batal</string>
+    <string name="save">Simpan</string>
+    <string name="btn_claim">klaim</string>
+    <string name="btn_choose_coupon">Pilih kupon diskon</string>
+    <string name="btn_continue">lanjutkan</string>
+    <string name="btn_delete">Hapus</string>
 
 
     <!--  order title  -->
-    <string name="add_order">ADD ORDER</string>
-    <string name="order">ORDER</string>
-    <string name="number_order">Number of order</string>
-    <string name="note">Note</string>
+    <string name="add_order">TAMBAH PESANAN</string>
+    <string name="order">PESAN</string>
+    <string name="number_order">Jumlah pesanan</string>
+    <string name="note">Catatan</string>
 
     <!--    hint    -->
     <string name="hint_email">example@gmail.com</string>
-    <string name="hint_password">your account password</string>
-    <string name="hint_name">your full name</string>
-    <string name="hint_phone">your phone number</string>
-    <string name="hint_date">YYYY-MM-DD</string>
-    <string name="hint_input_jumlah">input a number</string>
-    <string name="hint_input_note">input if necesssary</string>
-    <string name="hint_payment">payment</string>
-    <string name="hint_chosen_coupon">chosen coupon</string>
+    <string name="hint_password">password akun</string>
+    <string name="hint_name">nama lengkap</string>
+    <string name="hint_phone">nomor hp</string>
+    <string name="hint_date">TTTT-BB-HH</string>
+    <string name="hint_input_jumlah">masukan angka</string>
+    <string name="hint_input_note">masukan jika ada</string>
+    <string name="hint_payment">pembayaran</string>
+    <string name="hint_chosen_coupon">kupon terpilih</string>
 
     <!-- search hint -->
-    <string name="hint_search_menu">Search your craving here...</string>
-    <string name="hint_search_order">Search your order here...</string>
+    <string name="hint_search_menu">Cari yang kamu inginkan...</string>
+    <string name="hint_search_order">Cari pesananmu disini...</string>
 
 
     <!--    Helper text -->
-    <string name="helper_name">*required</string>
-    <string name="helper_phone">*required, 11-13 characters</string>
-    <string name="helper_date">*required, YYYY-MM-DD</string>
-    <string name="helper_email">*required, example: roemahsoto@gmail.com</string>
-    <string name="helper_password">*required, min. 6 characters</string>
+    <string name="helper_name">*wajib</string>
+    <string name="helper_phone">*wajib, 11-13 karakter</string>
+    <string name="helper_date">*wajib, TTTT-BB-HH</string>
+    <string name="helper_email">*wajib, contoh: roemahsoto@gmail.com</string>
+    <string name="helper_password">*wajib, min. 6 karakter</string>
 
 
     <!--    Menu Page-->
-    <string name="title_recommend">Recommended for you</string>
-    <string name="title_menu_list">Menu List</string>
+    <string name="title_recommend">Rekomendasi untukmu</string>
+    <string name="title_menu_list">Daftar Menu</string>
 
     <!--    Cart Page    -->
-    <string name="total">Total Payment</string>
+    <string name="total">Total Pembayaran</string>
     <string name="value">IDR 500.000,00</string>
-    <string name="cart_kosong">Your Cart is Empty</string>
-    <string name="cart_kosong2">Looks like you have not added anything to your cart yet</string>
+    <string name="cart_kosong">Keranjangmu Lagi Kosong</string>
 
-    <string name="cart_notlogin">You are not login yet</string>
-    <string name="cart_notlogin2">please login first to access this page</string>
-    <string name="menu_notlogin2">please login first to order this menu</string>
+    <string name="cart_kosong2">Sepertinya kamu belum menambah pesanan apapun ke dalam keranjangmu</string>
+
+    <string name="cart_notlogin">Kamu belum masuk</string>
+    <string name="cart_notlogin2">Silahkan masuk terlebih dahulu untuk mengakses halaman ini</string>
+    <string name="menu_notlogin2">Silahkan masuk terlebih dahulu untuk melakukan pemesanan</string>
 
     <!--    History page-->
-    <string name="history_kosong">You have not records yet</string>
-    <string name="history_kosong2">Add your records like others with checkout your transaction</string>
+    <string name="history_kosong">Kamu belum ada riwayat transaksi</string>
+    <string name="history_kosong2">Tambah riwayatmu seperti yang lain dengan checkout transaksimu</string>
     <string name="title_transaction">TRANS</string>
     <string name="queue">001</string>
     <string name="id_transaction">ROESO-20220513-001</string>
     <string name="title_tanggal_transaksi">Date</string>
     <string name="tanggal_transaksi">2022-05-13 10:38:08</string>
-    <string name="title_metode">Payment Method</string>
+    <string name="title_metode">Metode</string>
     <string name="metode">Cashless</string>
-    <string name="title_total">Total Transaction</string>
+    <string name="title_total">Total Transaksi</string>
     <string name="total_transaction">IDR 3,000,000</string>
     <string name="titik_dua">:</string>
 
     <!--  dialog kosong  -->
-    <string name="kosong_title">We are sorry</string>
-    <string name="kosong_body">The menu is not available for a while</string>
+    <string name="kosong_title">Mohon maaf</string>
+    <string name="kosong_body">Menu yang dipilih belum tersedia untuk sementara</string>
 
     <!--  dialog delete  -->
-    <string name="delete_title">Confirmation Delete</string>
-    <string name="delete_body">Do you want to delete selected order?</string>
+    <string name="delete_title">Konfirmasi Hapus</string>
+    <string name="delete_body">Apakah kamu ingin menghapus pesanan yang dipilih?</string>
 
     <!-- My Coupon -->
-    <string name="kosong_my_coupon_title">No coupon found</string>
-    <string name="kosong_my_coupon_body">Claim your coupon to get more offers</string>
+    <string name="kosong_my_coupon_title">Tidak ada kupon yang ditemukan</string>
+    <string name="kosong_my_coupon_body">Klaim kuponmu untuk mendapatkan tawaran spesial</string>
 
     <!-- My Coupon -->
-    <string name="kosong_coupon_list_title">No coupon found</string>
-    <string name="kosong_coupon_list_body">There is nothing to offer right now, comeback later</string>
+    <string name="kosong_coupon_list_title">Tidak ada kupon yang ditemukan</string>
+    <string name="kosong_coupon_list_body">Belum ada tawaran spesial sekarang, silahkan kembali lagi</string>
 
     <!--  dialog Logout  -->
-    <string name="logout_title">Confirmation Logout</string>
-    <string name="logout_body">Are you sure want to logout from this application?</string>
+    <string name="logout_title">Konfirmasi Keluar</string>
+    <string name="logout_body">Apakah kamu yakin ingin keluar dari sistem aplikasi ini?</string>
 
     <!--  dialog Checkout  -->
-    <string name="checkout_title">Confirmation Checkout</string>
-    <string name="checkout_body">Are you sure want to checkout your order? once you click continue, you can not go back again</string>
+    <string name="checkout_title">Konfirmasi Checkout</string>
+    <string name="checkout_body">Apakah kamu yakin ingin checkout pesananmu? ketika klik lanjutkan, kamu tidak akan bisa mengubahnya lagi</string>
 
     <!-- menunggu pembayaran -->
     <string name="title_not_pay_yet">Menunggu pembayaran, klik untuk melihat detail...</string>

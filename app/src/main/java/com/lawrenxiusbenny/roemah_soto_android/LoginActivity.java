@@ -154,17 +154,17 @@ public class LoginActivity extends AppCompatActivity {
         getPassword = txtInputPass.getText().toString();
 
         if(getEmail.isEmpty()){
-            twEmail.setError("Email should not be empty");
+            twEmail.setError("Email tidak boleh kosong");
         }else if(!Patterns.EMAIL_ADDRESS.matcher(getEmail).matches()){
-            twEmail.setError("Invalid Email");
+            twEmail.setError("Email Invalid");
         }else{
             cekEmail = true;
         }
 
         if(getPassword.isEmpty()){
-            twPassword.setError("Password should not be empty");
+            twPassword.setError("Password tidak boleh kosong");
         }else if(getPassword.length()<6){
-            twPassword.setError("Password should be at least 6 characters");
+            twPassword.setError("Password harus minimal 6 karakter");
         }else{
             cekPassword = true;
         }
@@ -203,13 +203,13 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(LoginActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(LoginActivity.this, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                FancyToast.makeText(LoginActivity.this, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(LoginActivity.this, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 error.printStackTrace();
                 loadingDialog.dismissDialog();
             }

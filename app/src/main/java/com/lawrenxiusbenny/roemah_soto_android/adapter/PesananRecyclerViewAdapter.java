@@ -243,7 +243,7 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
                         @Override
                         public void onClick(View view) {
                             if (txtInputJumlah.getText().toString().length() < 1) {
-                                txtInputJumlah.setError("should be at least 1");
+                                txtInputJumlah.setError("harus minimal 1");
                             } else {
                                 updatePesanan(pesanan.getId_pesanan(), Integer.valueOf(txtInputJumlah.getText().toString()), txtInputNote.getText().toString());
                                 dialog.dismiss();
@@ -306,18 +306,18 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
                     try {
                         loadingDialog.dismissDialog();
                         JSONObject obj = new JSONObject(response);
-                        FancyToast.makeText(context, "Order data updated successfully", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        FancyToast.makeText(context, obj.getString("OUT_MESSAGE"), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                     } catch (JSONException e) {
                         loadingDialog.dismissDialog();
                         e.printStackTrace();
-                        FancyToast.makeText(context, "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                        FancyToast.makeText(context, "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     loadingDialog.dismissDialog();
-                    FancyToast.makeText(context, "Network unstable, please try again", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(context, "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }) {
                 @Override
@@ -341,18 +341,18 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
                     try {
                         loadingDialog.dismissDialog();
                         JSONObject obj = new JSONObject(response);
-                        FancyToast.makeText(context, "Order data deleted successfully",FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                        FancyToast.makeText(context, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
                     } catch (JSONException e) {
                         loadingDialog.dismissDialog();
                         e.printStackTrace();
-                        FancyToast.makeText(context, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                        FancyToast.makeText(context, "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     loadingDialog.dismissDialog();
-                    FancyToast.makeText(context, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(context, "Jaringan tidak stabil, silahkan coba lagi", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }){
                 @Override

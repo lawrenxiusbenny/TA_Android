@@ -1,6 +1,7 @@
 package com.lawrenxiusbenny.roemah_soto_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -55,6 +57,8 @@ public class HistoryFragment extends Fragment {
     private ScrollView layoutRecycler;
     private ConstraintLayout layoutKosong, layoutNotLoginYet;
 
+    private Button btnGoLogin;
+
     ShimmerFrameLayout shimmerFrameLayout;
 
     private SharedPreferences sPreferences;
@@ -75,10 +79,20 @@ public class HistoryFragment extends Fragment {
         layoutKosong = view.findViewById(R.id.layoutKosongHistory);
         layoutNotLoginYet = view.findViewById(R.id.layoutNotLoginHistory);
         layoutRecycler = view.findViewById(R.id.layoutRecyclerHistory);
+        btnGoLogin = view.findViewById(R.id.btnGoLoginHistory);
 
         //cek sudah login atau belum
         sPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         id_customer = sPreferences.getInt(KEY_ID,Context.MODE_PRIVATE);
+
+        btnGoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(getContext(),LoginActivity.class);
+                startActivity(i);
+            }
+        });
 
         loadHistory();
 

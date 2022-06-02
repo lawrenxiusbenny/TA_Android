@@ -84,7 +84,7 @@ public class CouponListRecyclerViewAdapter extends RecyclerView.Adapter<CouponLi
                 jumlah_point = sPreferences.getInt(KEY_POINT, context.MODE_PRIVATE);
                 id_customer = sPreferences.getInt(KEY_ID,context.MODE_PRIVATE);
                 if(jumlah_point < coupon.getJumlah_point_tukar()){
-                    FancyToast.makeText(context, "You don't have enough point to claim this coupon", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(context, "Jumlah poinmu tidak cukup untuk klaim kupon ini", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }else{
                     claimCoupon(id_customer,coupon.getId_kupon_diskon(),coupon.getJumlah_point_tukar());
                 }
@@ -128,14 +128,14 @@ public class CouponListRecyclerViewAdapter extends RecyclerView.Adapter<CouponLi
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
-                    FancyToast.makeText(context, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(context, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismissDialog();
-                FancyToast.makeText(context, "Network unstable, please try again",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                FancyToast.makeText(context, "Jaringan tidak stabil, silahkan coba lagi",FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
                 error.printStackTrace();
             }
         }){
