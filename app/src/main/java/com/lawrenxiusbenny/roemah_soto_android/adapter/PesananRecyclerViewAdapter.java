@@ -237,7 +237,7 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
                         }
                     });
 
-                    btnSave.setText("Save");
+                    btnSave.setText("Simpan");
 
                     btnSave.setOnClickListener(new View.OnClickListener() {
                         @Override

@@ -31,7 +31,7 @@
     <string name="title_coupon">Kupon Diskon</string>
     <string name="title_coupon_customer">Kupon Saya</string>
     <string name="title_coupon_list">Daftar Kupon</string>
-    <string name="title_checkout">Checkout</string>
+    <string name="title_checkout">Pembayaran</string>
     <string name="title_choose_payment">Pembayaran</string>
     <string name="title_choose_coupon">Pilih kuponmu</string>
 
@@ -41,7 +41,7 @@
     <string name="persentase_potongan">15%</string>
     <string name="nama_kupon">Nama kupon diskon</string>
     <string name="deskripsi_kupon">Deskripsi kupon</string>
-    <string name="tanggal_claim">claim at 2022-04-02</string>
+    <string name="tanggal_claim">klaim pada tanggal 2022-04-02</string>
     <string name="jumlah_point_title">Jumlah point tukar</string>
     <string name="jumlah_point">20 point</string>
     <string name="nama_chosen_kupon">15% off | Nama Kupon</string>
@@ -52,7 +52,7 @@
     <string name="btn_sign_up">Daftar</string>
     <string name="sign_up">Daftar sekarang!</string>
     <string name="home">Beranda</string>
-    <string name="checkout">CHECKOUT</string>
+    <string name="checkout">BAYAR</string>
     <string name="close">Tutup</string>
     <string name="add">Tambah</string>
     <string name="logout">Keluar</string>
@@ -63,6 +63,9 @@
     <string name="btn_choose_coupon">Pilih kupon diskon</string>
     <string name="btn_continue">lanjutkan</string>
     <string name="btn_delete">Hapus</string>
+    <string name="btn_ubah">UBAH</string>
+    <string name="btn_delete_CART">HAPUS</string>
+    <string name="btn_pesan">Pesan</string>
 
 
     <!--  order title  -->
@@ -116,7 +119,7 @@
     <string name="title_transaction">TRANS</string>
     <string name="queue">001</string>
     <string name="id_transaction">ROESO-20220513-001</string>
-    <string name="title_tanggal_transaksi">Date</string>
+    <string name="title_tanggal_transaksi">Tanggal</string>
     <string name="tanggal_transaksi">2022-05-13 10:38:08</string>
     <string name="title_metode">Metode</string>
     <string name="metode">Cashless</string>

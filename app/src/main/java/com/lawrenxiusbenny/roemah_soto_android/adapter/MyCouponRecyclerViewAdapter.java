@@ -54,7 +54,7 @@ public class MyCouponRecyclerViewAdapter extends RecyclerView.Adapter<MyCouponRe
         holder.txtPersentase.setText(persentase);
         holder.txtNamaKupon.setText(coupon.getNama_kupon());
         holder.txtDeskripsi.setText(coupon.getDeskripsi_kupon());
-        String claimAt = "claim at "+coupon.getCreated_at();
+        String claimAt = "klaim pada "+coupon.getCreated_at();
         holder.txtClaimAt.setText(claimAt);
     }
 

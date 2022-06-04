@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:background="#6578b5"
             android:gravity="center"
-            android:text="EDIT"
+            android:text="@string/btn_ubah"
             android:textColor="@color/white"/>
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:background="#b56565"
             android:gravity="center"
-            android:text="DELETE"
+            android:text="@string/btn_delete_CART"
             android:textColor="@color/white"/>
     </LinearLayout>
 
