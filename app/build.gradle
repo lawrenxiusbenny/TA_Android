@@ -16,9 +16,13 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     productFlavors {
-        sandbox {
+//        sandbox {
+//            buildConfigField "String", "BASE_URL", "\"https://roemahsoto.xyz/midtrans.php/\""
+//            buildConfigField "String", "CLIENT_KEY", "\"SB-Mid-client-aqSpUiTIefeJlUQw\""
+//        }
+        production {
             buildConfigField "String", "BASE_URL", "\"https://roemahsoto.xyz/midtrans.php/\""
-            buildConfigField "String", "CLIENT_KEY", "\"SB-Mid-client-aqSpUiTIefeJlUQw\""
+            buildConfigField "String", "CLIENT_KEY", "\"Mid-client-oRfuUmj-DFJ_nugr\""
         }
     }
     buildTypes {
@@ -88,8 +92,12 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
     //midtrans
-    implementation'com.midtrans:uikit:1.28.0-SANDBOX'
-    sandboxImplementation'com.midtrans:uikit:1.28.0-SANDBOX'
+//    implementation'com.midtrans:uikit:1.28.0-SANDBOX'
+//    sandboxImplementation'com.midtrans:uikit:1.28.0-SANDBOX'
+
+    implementation 'com.midtrans:uikit:1.28.0'
+    productionImplementation 'com.midtrans:uikit:1.28.0'
+
 
 
 }

@@ -66,6 +66,7 @@
                     android:layout_width="286dp"
                     android:layout_height="244dp"
                     android:layout_marginTop="4dp"
+
                     android:src="@drawable/not_login"
                     app:layout_constraintBottom_toTopOf="@+id/textViewNotLogin"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -28,11 +28,12 @@
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/layoutMyCoupon"
-        android:visibility="gone"
+        android:id="@+id/swipeRefreshMyCouponRecyler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ScrollView
+            android:id="@+id/recyclerViewMyCoupon"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -42,6 +43,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshMyCouponRecylerKosong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutKosongMyCoupon"
             android:layout_width="match_parent"

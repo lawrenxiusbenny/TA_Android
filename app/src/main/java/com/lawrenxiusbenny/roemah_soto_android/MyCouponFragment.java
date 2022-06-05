@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -46,8 +47,9 @@ public class MyCouponFragment extends Fragment {
     private MyCouponRecyclerViewAdapter adapter;
     private List<Coupon> listCoupon;
 
-    private SwipeRefreshLayout layoutRecycler;
+    private SwipeRefreshLayout swipeRefreshLayout,swipeRefreshLayout2;
     private ConstraintLayout layoutKosong;
+    private ScrollView layoutRecycler;
 
     ShimmerFrameLayout shimmerFrameLayout;
     private View view;
@@ -65,8 +67,11 @@ public class MyCouponFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_coupon, container, false);
 
-        layoutRecycler = view.findViewById(R.id.layoutMyCoupon);
+        layoutRecycler = view.findViewById(R.id.recyclerViewMyCoupon);
         layoutKosong = view.findViewById(R.id.layoutKosongMyCoupon);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyCouponRecyler);
+        swipeRefreshLayout2 = view.findViewById(R.id.swipeRefreshMyCouponRecylerKosong);
+
 
         shimmerFrameLayout = view.findViewById(R.id.shimmer_layout_my_coupon);
         //get id customer
@@ -82,12 +87,19 @@ public class MyCouponFragment extends Fragment {
         shimmerFrameLayout.startShimmer();
         setAdapter();
         getData();
-        layoutRecycler.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getData();
             }
         });
+        swipeRefreshLayout2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
+
     }
 
     public void setAdapter(){
@@ -112,13 +124,12 @@ public class MyCouponFragment extends Fragment {
 
                     if(response.getString("OUT_STAT").equalsIgnoreCase("T")){
                         JSONArray jsonArray = response.getJSONArray("OUT_DATA");
-
                         if(jsonArray.length()!=0){
                             layoutRecycler.setVisibility(View.VISIBLE);
                             layoutKosong.setVisibility(View.GONE);
                         }else{
-                            layoutRecycler.setVisibility(View.GONE);
                             layoutKosong.setVisibility(View.VISIBLE);
+                            layoutRecycler.setVisibility(View.GONE);
                         }
 
                         if(!listCoupon.isEmpty())
@@ -140,11 +151,12 @@ public class MyCouponFragment extends Fragment {
                             listCoupon.add(coupon);
                         }
                         adapter.notifyDataSetChanged();
-                        layoutRecycler.setRefreshing(false);
                     }else{
-                        layoutKosong.setVisibility(View.VISIBLE);
                         layoutRecycler.setVisibility(View.GONE);
+                        layoutKosong.setVisibility(View.VISIBLE);
                     }
+                    swipeRefreshLayout.setRefreshing(false);
+                    swipeRefreshLayout2.setRefreshing(false);
                 }catch (JSONException e){
                     e.printStackTrace();
                 }

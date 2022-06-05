@@ -12,9 +12,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -42,6 +45,7 @@ import com.lawrenxiusbenny.roemah_soto_android.dialog.LoadingDialog;
 import com.lawrenxiusbenny.roemah_soto_android.model.Midtrans;
 import com.lawrenxiusbenny.roemah_soto_android.model.Pesanan;
 
+import com.midtrans.raygun.network.http.RaygunHttpsUrlConnection;
 import com.midtrans.sdk.corekit.callback.TransactionCallback;
 import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback;
 import com.midtrans.sdk.corekit.core.MidtransSDK;
@@ -55,6 +59,7 @@ import com.midtrans.sdk.corekit.models.ShippingAddress;
 import com.midtrans.sdk.corekit.models.TransactionResponse;
 import com.midtrans.sdk.corekit.models.snap.TransactionResult;
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder;
+import com.midtrans.sdk.uikit.views.webview.WebViewPaymentActivity;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONArray;
@@ -73,7 +78,7 @@ import static com.android.volley.Request.Method.GET;
 import static com.android.volley.Request.Method.POST;
 
 
-public class CheckoutActivity extends AppCompatActivity implements TransactionFinishedCallback {
+public class CheckoutActivity extends AppCompatActivity implements TransactionFinishedCallback{
 
     private RecyclerView recyclerView;
     private ShowPesananRecyclerViewAdapter adapter;
@@ -237,6 +242,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                 .buildSDK();
     }
 
+
     @Override
     public void onTransactionFinished(TransactionResult result) {
         Intent i = new Intent(CheckoutActivity.this,MainActivity.class);
@@ -270,17 +276,17 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     startActivity(i);
                     break;
                 case TransactionResult.STATUS_FAILED:
-                    FancyToast.makeText(CheckoutActivity.this, "Transaction Failed",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(CheckoutActivity.this, "Transaction Gagal",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                     break;
             }
             result.getResponse().getValidationMessages();
         }else if(result.isTransactionCanceled()){
-            FancyToast.makeText(CheckoutActivity.this, "Transaction Canceled",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
+            FancyToast.makeText(CheckoutActivity.this, "Transaksi Batal",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
         }else{
             if(result.getStatus().equalsIgnoreCase(TransactionResult.STATUS_INVALID)){
-                FancyToast.makeText(CheckoutActivity.this, "Transaction Invalid",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
+                FancyToast.makeText(CheckoutActivity.this, "Transaksi Invalid",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
             }else{
-                FancyToast.makeText(CheckoutActivity.this, "Transaction Finished with failure",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
+                FancyToast.makeText(CheckoutActivity.this, "Transaksi gagal",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
             }
         }
     }
