@@ -42,6 +42,7 @@ public class CouponListRecyclerViewAdapter extends RecyclerView.Adapter<CouponLi
     private Context context;
 
     private SharedPreferences sPreferences;
+    private SharedPreferences.Editor editor;
     public static final String KEY_POINT = "jumlah_point";
     public static final String KEY_ID = "id_customer";
     private int jumlah_point = 0;
@@ -125,6 +126,12 @@ public class CouponListRecyclerViewAdapter extends RecyclerView.Adapter<CouponLi
                     loadingDialog.dismissDialog();
                     JSONObject obj = new JSONObject(response);
                     FancyToast.makeText(context, obj.getString("OUT_MESSAGE"),FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                    editor = sPreferences.edit();
+                    int jumlahSesudah = 0;
+                    
+                    jumlahSesudah = jumlah_point - jumlah_point_tukar;
+                    editor.putInt(KEY_POINT,jumlahSesudah);
+                    editor.commit();
                 } catch (JSONException e) {
                     loadingDialog.dismissDialog();
                     e.printStackTrace();
