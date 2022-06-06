@@ -92,11 +92,11 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
     //midtrans
-//    implementation'com.midtrans:uikit:1.28.0-SANDBOX'
-//    sandboxImplementation'com.midtrans:uikit:1.28.0-SANDBOX'
+//    implementation'com.midtrans:uikit:1.31.1-SANDBOX'
+//    sandboxImplementation'com.midtrans:uikit:1.31.1-SANDBOX'
 
-    implementation 'com.midtrans:uikit:1.28.0'
-    productionImplementation 'com.midtrans:uikit:1.28.0'
+    implementation 'com.midtrans:uikit:1.31.1'
+    productionImplementation 'com.midtrans:uikit:1.31.1'
 
 
 
