@@ -76,19 +76,15 @@
             <include layout="@layout/item_shimmer_pesanan" />
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
-    <ScrollView
-        android:id="@+id/scrollViewTampilPesanan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/closeBtnKosong"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTampilPesanan">
         <LinearLayout
+            android:id="@+id/scrollViewTampilPesanan"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/closeBtnKosong"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTampilPesanan"
             android:orientation="vertical"
             >
             <TextView
@@ -293,6 +289,5 @@
                 android:layout_height="match_parent"
                 />
         </LinearLayout>
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </com.amar.library.ui.StickyScrollView>

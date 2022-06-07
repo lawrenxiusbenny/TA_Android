@@ -57,7 +57,7 @@ public class ShowPesananTransaksiActivity extends AppCompatActivity {
     ImageButton btnBack;
 
     ShimmerFrameLayout shimmerFrameLayout;
-    ScrollView layoutRecycler;
+    LinearLayout layoutRecycler;
 
     private SharedPreferences sPreferences;
     public static final String KEY_ID = "id_transaksi";

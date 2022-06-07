@@ -208,7 +208,7 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
                     TextView txtNamaAdd = dialog.findViewById(R.id.namaMenuAdd);
                     TextView txtHargaAdd = dialog.findViewById(R.id.HargaMenuAdd);
                     TextView title = dialog.findViewById(R.id.orderTitle);
-                    title.setText("EDIT ORDER");
+                    title.setText("UBAH PESANAN");
 
                     txtNamaAdd.setText(pesanan.getNama_menu());
                     txtInputJumlah.setText(String.valueOf(pesanan.getJumlah_pesanan()));

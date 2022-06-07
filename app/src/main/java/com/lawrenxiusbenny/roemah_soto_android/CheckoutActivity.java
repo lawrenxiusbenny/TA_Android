@@ -166,7 +166,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     public void onClick(View view) {
                         if(payment.equalsIgnoreCase("Cashless")){
                             dialog.dismiss();
-                            MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan,listPesanan,String.valueOf(id_customer),harga,1,"nama_customer"));
+                            MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan,listPesanan,String.valueOf(id_customer),harga,1,nama_customer));
                             MidtransSDK.getInstance().startPaymentUiFlow(view.getContext());
                         }else{
                             dialog.dismiss();
