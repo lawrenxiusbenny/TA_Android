@@ -165,9 +165,19 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     @Override
                     public void onClick(View view) {
                         if(payment.equalsIgnoreCase("Cashless")){
-                            dialog.dismiss();
-                            MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan,listPesanan,String.valueOf(id_customer),harga,1,nama_customer));
-                            MidtransSDK.getInstance().startPaymentUiFlow(view.getContext());
+                            if(harga<10000){
+                                dialog.dismiss();
+                                FancyToast.makeText(CheckoutActivity.this, "Minimal total transaksi IDR 10.000 untuk metode Cashless",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
+                            }else if(harga>=10000 && harga<20000){
+                                dialog.dismiss();
+                                MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan,listPesanan,String.valueOf(id_customer),harga,1,nama_customer));
+                                MidtransSDK.getInstance().startPaymentUiFlow(view.getContext(), PaymentMethod.GO_PAY);
+                            }else{
+                                dialog.dismiss();
+                                MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan,listPesanan,String.valueOf(id_customer),harga,1,nama_customer));
+                                MidtransSDK.getInstance().startPaymentUiFlow(view.getContext());
+                            }
+
                         }else{
                             dialog.dismiss();
                             addDataTransactionCash(id_customer,id_kupon_customer,harga,"Cash","Belum Lunas");
@@ -249,7 +259,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
         if(result.getResponse() != null){
             switch (result.getStatus()){
                 case TransactionResult.STATUS_SUCCESS:
-//                    FancyToast.makeText(CheckoutActivity.this, "Transaction Finished",FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+
                     addDataTransactionSuccess(id_customer,id_kupon_customer, harga,"Cashless","Lunas",result.getResponse().getPaymentType());
                     startActivity(i);
                     break;
