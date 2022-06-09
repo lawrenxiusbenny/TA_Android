@@ -264,7 +264,6 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     startActivity(i);
                     break;
                 case TransactionResult.STATUS_PENDING:
-//                    FancyToast.makeText(CheckoutActivity.this, "Transaction Pending, more info in your transaction history",FancyToast.LENGTH_SHORT, FancyToast.INFO, false).show();
                     String va_number_or_link_payment = "";
                     if(result.getResponse().getPaymentType().equalsIgnoreCase("bank_transfer")){
                         if(result.getResponse().getBcaVaNumber() != null){
@@ -286,7 +285,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                     startActivity(i);
                     break;
                 case TransactionResult.STATUS_FAILED:
-                    FancyToast.makeText(CheckoutActivity.this, "Transaction Gagal",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
+                    FancyToast.makeText(CheckoutActivity.this, "Transaksi Gagal",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
                     break;
             }
             result.getResponse().getValidationMessages();

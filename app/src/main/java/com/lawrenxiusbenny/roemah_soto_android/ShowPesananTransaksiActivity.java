@@ -103,6 +103,8 @@ public class ShowPesananTransaksiActivity extends AppCompatActivity {
                 ClipboardManager cm = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
                 cm.setText(txtVaOrLink.getText().toString());
                 Toast.makeText(ShowPesananTransaksiActivity.this,"salin ke clipboard",Toast.LENGTH_SHORT).show();
+                FancyToast.makeText(ShowPesananTransaksiActivity.this, "Jika berupa Link dan tidak dapat diakses, silahkan konfirmasi ke kasir untuk dibatalkan",FancyToast.LENGTH_LONG, FancyToast.WARNING, false).show();
+
             }
         });
 
