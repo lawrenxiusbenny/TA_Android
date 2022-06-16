@@ -111,8 +111,8 @@ public class ShowPesananRecyclerViewAdapter extends RecyclerView.Adapter<ShowPes
 
         holder.txtNamaMenu.setText(pesanan.getNama_menu());
         if (pesanan.getHarga_menu() == 0) {
-            holder.txtHargaMenu.setText("Free");
-            holder.txtSubTotal.setText("Free");
+            holder.txtHargaMenu.setText("Gratis");
+            holder.txtSubTotal.setText("Gratis");
         } else {
             holder.txtHargaMenu.setText("IDR " + formatter.format(pesanan.getHarga_menu()));
             holder.txtSubTotal.setText("IDR " + formatter.format(pesanan.getSub_total()));

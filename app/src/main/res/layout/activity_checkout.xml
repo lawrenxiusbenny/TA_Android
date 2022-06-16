@@ -11,7 +11,7 @@
         android:id="@+id/shimmer_layout_checkout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
@@ -23,7 +23,7 @@
     </com.facebook.shimmer.ShimmerFrameLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutViewCheckout"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white_001"
@@ -225,16 +225,32 @@
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:layout_width="135dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/twNomorMeja"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:layout_gravity="center"
-                android:layout_margin="15dp"
-                android:text="@string/title_choose_payment"
-                android:textAlignment="center"
-                android:textColor="@color/green_002"
-                android:textSize="15dp"
-                android:textStyle="bold" />
+
+                android:hint="@string/nomor_meja"
+                app:hintTextColor="@color/green_002"
+                app:startIconDrawable="@drawable/ic_baseline_format_list_numbered_24"
+                app:startIconTint="@color/green_002">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtInputNomorMeja"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green_002"
+                    android:textCursorDrawable="@null"
+                    android:background="@color/green_001"
+                    android:inputType="date"
+                    android:textSize="8pt"
+                    tools:layout_editor_absoluteX="1dp"
+                    tools:layout_editor_absoluteY="362dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/twDdPayment"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"

@@ -84,6 +84,9 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
     private ShowPesananRecyclerViewAdapter adapter;
     private List<Pesanan> listPesanan;
 
+    private TextInputLayout twMeja;
+    private TextInputEditText txtMeja;
+
     private Button btnChooseCoupon, btnContinue;
 
     private Chip chipChosen;
@@ -146,46 +149,52 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog;
-                dialog = new Dialog(view.getContext());
-                dialog.setContentView(R.layout.dialog_confirm_checkout);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-                Button btnCancel = dialog.findViewById(R.id.closeBtnCheckout);
-                Button btnContinue = dialog.findViewById(R.id.btnContinueDialog);
+                if(txtMeja.getText().toString().equalsIgnoreCase("") || txtMeja.getText().toString().equalsIgnoreCase("0")){
+                    txtMeja.setError("error");
+                    FancyToast.makeText(CheckoutActivity.this, "nomor meja tidak boleh kosong. Jika tidak ada, masukkan '-'", FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
+                }else {
+                    Dialog dialog;
+                    dialog = new Dialog(view.getContext());
+                    dialog.setContentView(R.layout.dialog_confirm_checkout);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                    Button btnCancel = dialog.findViewById(R.id.closeBtnCheckout);
+                    Button btnContinue = dialog.findViewById(R.id.btnContinueDialog);
 
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-                btnContinue.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(payment.equalsIgnoreCase("Cashless")){
-                            if(harga<10000){
-                                dialog.dismiss();
-                                FancyToast.makeText(CheckoutActivity.this, "Minimal total transaksi IDR 10.000 untuk metode Cashless",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
-                            }else if(harga>=10000 && harga<20000){
-                                dialog.dismiss();
-                                MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan,listPesanan,String.valueOf(id_customer),harga,1,nama_customer));
-                                MidtransSDK.getInstance().startPaymentUiFlow(view.getContext(), PaymentMethod.GO_PAY);
-                            }else{
-                                dialog.dismiss();
-                                MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan,listPesanan,String.valueOf(id_customer),harga,1,nama_customer));
-                                MidtransSDK.getInstance().startPaymentUiFlow(view.getContext());
-                            }
-
-                        }else{
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
                             dialog.dismiss();
-                            addDataTransactionCash(id_customer,id_kupon_customer,harga,"Cash","Belum Lunas");
-                            Intent i = new Intent(CheckoutActivity.this,MainActivity.class);
-                            startActivity(i);
                         }
-                    }
-                });
+                    });
+
+                    btnContinue.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            if (payment.equalsIgnoreCase("Cashless")) {
+                                if (harga < 10000) {
+                                    dialog.dismiss();
+                                    FancyToast.makeText(CheckoutActivity.this, "Minimal total transaksi IDR 10.000 untuk metode Cashless", FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show();
+                                } else if (harga >= 10000 && harga < 20000) {
+                                    dialog.dismiss();
+                                    MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan, listPesanan, String.valueOf(id_customer), harga, 1, nama_customer));
+                                    MidtransSDK.getInstance().startPaymentUiFlow(view.getContext(), PaymentMethod.GO_PAY);
+                                } else {
+                                    dialog.dismiss();
+                                    MidtransSDK.getInstance().setTransactionRequest(transactionRequest(persentase_potongan, listPesanan, String.valueOf(id_customer), harga, 1, nama_customer));
+                                    MidtransSDK.getInstance().startPaymentUiFlow(view.getContext());
+                                }
+
+                            } else {
+                                dialog.dismiss();
+                                addDataTransactionCash(id_customer, id_kupon_customer, harga, "Cash", "Belum Lunas", txtMeja.getText().toString());
+                                Intent i = new Intent(CheckoutActivity.this, MainActivity.class);
+                                startActivity(i);
+                            }
+                        }
+                    });
+                }
 
 
             }
@@ -239,6 +248,8 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
         chipGroupChosen = findViewById(R.id.chipGroupChosenCoupon);
         shimmerFrameLayout = findViewById(R.id.shimmer_layout_checkout);
         layoutCheckout = findViewById(R.id.layoutViewCheckout);
+        twMeja = findViewById(R.id.twNomorMeja);
+        txtMeja = findViewById(R.id.txtInputNomorMeja);
     }
 
     public void initMidtransSdk(){
@@ -260,7 +271,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
             switch (result.getStatus()){
                 case TransactionResult.STATUS_SUCCESS:
 
-                    addDataTransactionSuccess(id_customer,id_kupon_customer, harga,"Cashless","Lunas",result.getResponse().getPaymentType());
+                    addDataTransactionSuccess(id_customer,id_kupon_customer, harga,"Cashless","Lunas",result.getResponse().getPaymentType(),txtMeja.getText().toString());
                     startActivity(i);
                     break;
                 case TransactionResult.STATUS_PENDING:
@@ -281,7 +292,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                         va_number_or_link_payment = result.getResponse().getDeeplinkUrl();
                     }
                     paymentPendingHandle(va_number_or_link_payment);
-                    addDataTransactionPending(id_customer,id_kupon_customer, harga,"Cashless","Belum Lunas",result.getResponse().getPaymentType(),va_number_or_link_payment);
+                    addDataTransactionPending(id_customer,id_kupon_customer, harga,"Cashless","Belum Lunas",result.getResponse().getPaymentType(),va_number_or_link_payment,txtMeja.getText().toString());
                     startActivity(i);
                     break;
                 case TransactionResult.STATUS_FAILED:
@@ -449,7 +460,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
         editor.commit();
     }
 
-    public void addDataTransactionSuccess(int id_customer, int id_kupon_customer, double total_harga, String metode_pembayaran, String status_transaksi, String nama_metode){
+    public void addDataTransactionSuccess(int id_customer, int id_kupon_customer, double total_harga, String metode_pembayaran, String status_transaksi, String nama_metode, String nomor_meja){
         RequestQueue queue = Volley.newRequestQueue(this);
 
         loadingDialog.startLoadingDialog();
@@ -492,6 +503,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                 params.put("metode_pembayaran", metode_pembayaran);
                 params.put("status_transaksi", status_transaksi);
                 params.put("nama_metode", nama_metode);
+                params.put("nomor_meja", nomor_meja);
                 params.put("device", "mobile");
                 return params;
             }
@@ -499,7 +511,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
         queue.add(stringRequest);
     }
 
-    public void addDataTransactionPending(int id_customer, int id_kupon_customer, double total_harga, String metode_pembayaran, String status_transaksi, String nama_metode, String va_or_link){
+    public void addDataTransactionPending(int id_customer, int id_kupon_customer, double total_harga, String metode_pembayaran, String status_transaksi, String nama_metode, String va_or_link,String nomor_meja){
         RequestQueue queue = Volley.newRequestQueue(this);
 
         loadingDialog.startLoadingDialog();
@@ -543,6 +555,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                 params.put("status_transaksi", status_transaksi);
                 params.put("nama_metode", nama_metode);
                 params.put("va_number_or_link_payment", va_or_link);
+                params.put("nomor_meja", nomor_meja);
                 params.put("device", "mobile");
                 return params;
             }
@@ -550,7 +563,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
         queue.add(stringRequest);
     }
 
-    public void addDataTransactionCash(int id_customer, int id_kupon_customer, double total_harga, String metode_pembayaran, String status_transaksi){
+    public void addDataTransactionCash(int id_customer, int id_kupon_customer, double total_harga, String metode_pembayaran, String status_transaksi, String nomor_meja){
         RequestQueue queue = Volley.newRequestQueue(this);
 
         loadingDialog.startLoadingDialog();
@@ -592,6 +605,7 @@ public class CheckoutActivity extends AppCompatActivity implements TransactionFi
                 params.put("total_harga", String.valueOf(total_harga));
                 params.put("metode_pembayaran", metode_pembayaran);
                 params.put("status_transaksi", status_transaksi);
+                params.put("nomor_meja", nomor_meja);
                 params.put("device", "mobile");
                 return params;
             }

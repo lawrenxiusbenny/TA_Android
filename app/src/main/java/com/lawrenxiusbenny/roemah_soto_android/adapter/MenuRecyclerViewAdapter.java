@@ -185,7 +185,7 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
 
                         txtNamaAdd.setText(menu.getNama_menu());
                         if(menu.getHarga_menu()==0){
-                            txtHargaAdd.setText("Free");
+                            txtHargaAdd.setText("Gratis");
                         }else{
                             txtHargaAdd.setText("IDR "+ formatter.format(menu.getHarga_menu()));
                         }

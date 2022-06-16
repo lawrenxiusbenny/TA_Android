@@ -181,8 +181,8 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
 
             txtNamaMenu.setText(pesanan.getNama_menu());
             if (pesanan.getHarga_menu() == 0) {
-                txtHargaMenu.setText("Free");
-                txtSubTotal.setText("Free");
+                txtHargaMenu.setText("Gratis");
+                txtSubTotal.setText("Gratis");
             } else {
                 txtHargaMenu.setText("IDR " + formatter.format(pesanan.getHarga_menu()));
                 txtSubTotal.setText("IDR " + formatter.format(pesanan.getSub_total()));
@@ -220,7 +220,7 @@ public class PesananRecyclerViewAdapter extends RecyclerView.Adapter<PesananRecy
 
 
                     if (pesanan.getHarga_menu() == 0) {
-                        txtHargaAdd.setText("Free");
+                        txtHargaAdd.setText("Gratis");
                     } else {
                         txtHargaAdd.setText("IDR " + formatter.format(pesanan.getHarga_menu()));
                     }

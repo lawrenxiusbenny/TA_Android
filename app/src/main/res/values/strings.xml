@@ -35,6 +35,8 @@
     <string name="title_choose_payment">Pembayaran</string>
     <string name="title_choose_coupon">Pilih kuponmu</string>
 
+    <string name="nomor_meja">No. Meja</string>
+
     <!--Coupon discount-->
     <string name="my_coupon">Kupon Saya</string>
     <string name="coupon_list">Daftar Kupon</string>
